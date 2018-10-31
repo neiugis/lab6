@@ -67,7 +67,7 @@
 
                      <p>We will map county-to-county migration using data from the U.S. Census Bureau.</p>
                           <ul>
-                              <li><span style="color: darkred; font-weight: bold">Download the lab data <a href="https://drive.google.com/file/d/1Ca4XTggVLT9IxCDPT5LtDQ0BWOe7GzG2/view?usp=sharing" target="_blank">here</a>.</span> Extract the data to your desired directory. We will use the same dataset for creating the final deliverables.</li>
+                              <li><span style="color: darkred; font-weight: bold">Download the lab data <a href="https://drive.google.com/file/d/1HMErIa3W6T_UwlpgLEbuTW4B0s8Gh-qS/view?usp=sharing" target="_blank">here</a>.</span> Extract the data to your desired directory. We will use the same dataset for creating the final deliverables.</li>
 
                               <li>The folder contains a CSV file, with an associated CSVT file which defines data types when the data is added to QGIS. You don't need to do anything with the file here, just make sure they are stored in the same folder.</li>
 
@@ -109,20 +109,20 @@
 
                             <li>Once we have the county centroids in WGS 84, we could calculate the latitude and longitude for each point. <b>Remove the old centroid layer</b>.</li>
                             <li>Open the layer's attribute table, click the <b>Field Calculator</b> button <img alt="" src="img/but1.png">. </li>
-                                <li>Let's first calculate the <b>longitude</b> of the points Create a new <b>Decimal Number</b> field with <b>Precision 4</b> (number of decimal places). Select <b>$x</b> under Geometry as the Expression, which will return the x coordinate of the points (longitude as we are using WGS 84 as the coordinate system here).
-                                <center><img alt="" src="img/.png" width="56%" ></center></li>
+                                <li>Let's first calculate the <b>longitude</b> of the points. Create a NEW <b>Decimal Number</b> field with <b>Precision 4</b> (number of decimal places). Select <b>$x</b> under Geometry as the Expression, which will return the x coordinate of the points in the layer's coorinate system (i.e., longitude as we are using WGS 84 as the coordinate system here).
+                                <center><img alt="" src="img/cal.png" width="78%" ></center></li>
 
 
                               <li><span style="color:red; font-weight:bold; font-style:italic ">Your Turn</span>: calculate the <b>latitude</b> of the points (another new field), basically the y coordinates of the points.</li>
 
-                              <li>Click the <b>Toggle Editing Mode</b> button <img alt="" src="img/but2.png"> and SAVE the changes.</li>
+                              <li>Click the <b>Toggle Editing Mode</b> button <img alt="" src="img/but2.png"> and SAVE the changes.</li> </ul><br>
 
-                              <li>Now we have the spatial coordinates for the counties, how do we combine this with the migration data? - We may use a GIS technique called <b>Table Join</b>.</li>
-                        <p>Compare the CSV file and the county centroids, you will find <b>GEOIDs</b> from both layers which are unique identifiers of the counties which could be used as the <b>"key" to link the two files</b>.</p>
-                        <p>Table Join takes one table (or attribute table of a layer) as a target and join another table to it. The question is: <b>which file do we consider to be the target? </b></p>
+                              <p><i class="fa fa-spinner fa-pulse  fa-fw"></i> Now we have the spatial coordinates for the county centroids, how do we combine this with the migration data? - We may use a GIS technique called <b>Table Join</b>.</p>
+                        <p> <i class="fa fa-spinner fa-pulse  fa-fw"></i> Compare the CSV file and the county centroids, you will find <b>GEOIDs</b> (different header names though) from both layers. GEOIDs are unique identifiers of the counties which could be used as the <b>"key" to link the two files</b>.</p>
+                        <p><i class="fa fa-spinner fa-pulse  fa-fw"></i> Table Join takes one table (or attribute table of a layer) as a target and join another table to it. The question is: <b>which file do we consider to be the target? </b></p>
 
-                        <li>In QGIS, click the <b>Add Delimited Text Layer</b> button <img alt="" src="img/but3.png">to add the CSV table. Since the table doesn't contain any geometry information, we would select <b>no geometry</b>.
-                        <center><img alt="" src="img/.png" width="56%" ></center></li>
+                        <ul><li>In QGIS, click the <b>Add Delimited Text Layer</b> button <img alt="" src="img/but3.png"> to add the CSV table. Since the table doesn't contain any geometry information, we would select <b>no geometry</b>.
+                        <center><img alt="" src="img/nogeo.png" width="85%" ></center></li>
 
                         <li>Since we need migration origin/destination information for mapping (as opposed to all counties), we should use the <b>CSV file as the table join target</b>, and join both origin and destination coordinates from the point layers to it. I will only show you how to join county A coordinates and you will apply the technique to join county B coordinates.</li>
                             <li>In QGIS, right-click the CSV file and select <b>Properties > Joins</b>, click the Add + button at the bottom. Set up the Join and Target field properly (Note <b>GEOIDs of the counties are the keys for the table join to work, the field names in each table could be different as long as the values are the same</b>). Make sure to select the newly calculated lat and lon as fields to be joined. I also added A_ as the field name prefix to make things clear.
