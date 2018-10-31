@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lab 6</title>
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin=""/>
+
+        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        crossorigin=""></script>
+        
+        <!-- Load animation tweening library requirement for CanvasFlowMapLayer -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.6.0/Tween.min.js"></script>
+        
+        <!-- then load CanvasFlowMapLayer -->
+        <script src="CanvasFlowmapLayer.js"></script>
+        
+        <script type="text/javascript" src="cook.js"></script>
+        
+        <style type="text/css">
+          html, body { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            }
+            
+          #map { 
+            min-height: 100%; 
+            }
+            
+        </style>
+
+    </head>
+
+    <body>
+        <div id="map"></div>
+
+        <script type="text/javascript">
+
+          var map = L.map('map', {
+              center: [38.16, -100.96],
+              zoom: 3.4
+          });
+
+          L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+               attribution: '@ <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(map);
+            
+          L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
+              originAndDestinationFieldIds: {
+                originUniqueIdField: 'GEOID_A',  //origin ID, use GEOID_B if you want to reverse the flow
+                originGeometry: { //origin coordinates
+                  x: 'A_lon',
+                  y: 'A_lat'
+                },
+                destinationUniqueIdField: 'GEOID_B', //destination ID
+                destinationGeometry: { //destination coordinates
+                  x: 'B_lon',
+                  y: 'B_lat'
+                }
+              },
+              
+              // Options to customize the flow map, check out the link below
+              // https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#options-and-property-summary
+              pathDisplayMode: 'all',  
+              animationStarted: true,
+              animationEasingFamily: 'Cubic',
+              animationEasingType: 'In',
+              animationDuration: 2000
+            }).addTo(map);
+
+        </script>
+   </body>
+</html>
