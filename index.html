@@ -119,7 +119,7 @@
                               <li>Click the <b>Toggle Editing Mode</b> button <img alt="" src="img/but2.png"> and SAVE the changes.</li> </ul><br>
 
                               <p><i class="fa fa-spinner fa-pulse  fa-fw"></i> Now we have the spatial coordinates for the county centroids, how do we combine this with the migration data? - We may use a GIS technique called <b>Table Join</b>.</p>
-                        <p> <i class="fa fa-spinner fa-pulse  fa-fw"></i> Compare the CSV file and the county centroids, you will find <b>GEOIDs</b> (different header names though) from both layers. GEOIDs are unique identifiers of the counties which could be used as the <b>"key" to link the two files</b>.</p>
+                        <p> <i class="fa fa-spinner fa-pulse  fa-fw"></i> Compare the CSV file and the county centroids, you will find <b>GEOIDs</b> (different header names though) from both. GEOIDs are unique identifiers of the counties which could be used as the <b>"key" to link the two files</b>.</p>
                         <p><i class="fa fa-spinner fa-pulse  fa-fw"></i> Table Join takes one table (or attribute table of a layer) as a target and join another table to it. The question is: <b>which file do we consider to be the target? </b></p>
 
                         <ul><li>In QGIS, click the <b>Add Delimited Text Layer</b> button <img alt="" src="img/but3.png"> to add the CSV table. Since the table doesn't contain any geometry information, we would select <b>no geometry</b>.
