@@ -276,11 +276,39 @@
                   <li>The customized map looks like (<a href="https://raw.githubusercontent.com/neiugis/lab6/gh-pages/map/custom.html" target="_blank">sample code</a>) - zoom in to see the line width variations:</li>
                 <iframe id="final" src="map/custom.html" width=98% height=520 frameborder=0></iframe></ul>
 
+
+
+
                 <p><a id="title" title="Add Map Title" class="toc-item"></a></p>
                 <h3><i class="fa fa-paint-brush"></i> Add Map Title as a Control Pane</h3>
-                <p>A little extra, we will try another way of adding titles to the map - with a Leaflet control, as opposed to using the <code>&lt;h&gt;</code> tag. We actually have used this function before for adding the legend. Add a fixed map title would be a lot easier.</p>
+                <p>A little extra, we will try another way of adding titles to the map - with a Leaflet control, as opposed to using the <code>&lt;h&gt;</code> tag. We actually have used this function before for adding the legend. Adding a fixed map title would be easier.</p>
 
                 <ul>
+                  <li>Place the following lines in the <code>script</code> section to add the control for the title:
+                  <pre><code class="language-javascript">var title = L.control({position: 'topright'}); // position of the title
+
+title.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'title'); // create a div with a class "title"
+    this._div.innerHTML = "&lt;h3&gt;TOP 10 Net Migration from Cook County, Illinois&lt;/h3&gt;";  // Title text, may use html to customize
+    return this._div;
+};
+
+title.addTo(map);</code></pre></li>
+
+                <li>We could also add some styles to the title control to make it look nice. Place the following lines in the <code>style</code> tag (the <code>head</code>section):
+                <pre><code class="language-css">.title {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}</code></pre></li>
+
+                <li>If you would like to try some fun fonts, here is <a href="https://www.w3schools.com/howto/howto_google_fonts.asp" target="_blank">a list of Google fonts</a> you could explore. </li>
+
+                  <li>I tried the <b>Acme</b> font and my final map looks like (<a href="https://raw.githubusercontent.com/neiugis/lab6/gh-pages/map/map6.html" target="_blank">sample code</a>):</li>
+                <iframe id="final" src="map/map6.html" width=98% height=520 frameborder=0></iframe></ul>
                 </ul>
 
                   <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
