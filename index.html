@@ -193,7 +193,7 @@
                       <pre><code class="language-javascript">L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
   originAndDestinationFieldIds: {
     originUniqueIdField: 'GEOID_A',  //origin ID, use GEOID_B if you want to reverse the flow
-    originGeometry: { //origin coordinates
+    originGeometry: { //origin coordinates - Cook County as outflow is being mapped in the example
       x: 'A_lon',
       y: 'A_lat'
     },
@@ -214,7 +214,8 @@
 }).addTo(map);</code></pre></li>
 
                       <li>The map shows the flows you have selected and saved (<a href="https://raw.githubusercontent.com/neiugis/lab6/gh-pages/map/base.html" target="_blank">sample code</a>):</li>
-                    <iframe id="final" src="map/base.html" width=98% height=520 frameborder=0></iframe></ul>
+                    <iframe id="final" src="map/base.html" width=98% height=520 frameborder=0></iframe>
+                  Note the <b>flow direction</b> is correctly showing outflow from Cook County to other counties. defined by the origin/destination coordinates in the function.</ul>
 
 
 
@@ -281,15 +282,15 @@
 
                   <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Deliverables</h3>
-                     <p>For the deliverables, we will use the same migration data. Then, create TWO maps:</p>
+                     <p>For the deliverables, we use the same migration data (flows between Cook and other U.S. counties). You will create TWO maps:</p>
 
-                    <ul><li>A <mark>choropleth map with pie (NOT <strike>donut</strike>) charts</mark> as popups or tooltips when mouseover. Make sure to use <mark>appropriate attributes (standardized data) and classes</mark> for the choropleth map.
+                    <ul><li>A flow map to show the <mark>TOP 10 INFLOW to Cook County</mark> (be careful when you define the origins and destinations in the function).
                         </li>
                         <li>
                         </li>
-                        <li>Your final map will be graded based on its <b>overall design and accuracy, e.g., proper use of attributes, etc.</b></li>
+                        <li>Your final map will be graded based on its <b>overall design and accuracy, e.g., proper use of attributes, selection of data, direction of flows, data classification and symbolization, etc.</b></li>
                         <li>Host your two maps separately via GitHub (Make sure to rename the html file as <code>index.html</code> and upload any <b>associated data files and library file</b> to the repository!!!) and submit the two urls through <a href="https://neiu.desire2learn.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?db=74999&ou=2924591" target="_blank">D2L</a>. </li> <br>
-                        <li><b>EXTRA CREDITS (8 pts):</b> Download the original county-to-county migration data from the  <a href="https://www.census.gov/data/tables/2015/demo/geographic-mobility/county-to-county-migration-2011-2015.html" target="_blank">Census</a> (the In-, Out-, Net, and Gross Migration file). Create a animated flow map to show the TOP 10 county level NET migration in the entire U.S. (2011-2015).</li>
+                        <li><b>EXTRA CREDITS (8 pts):</b> Download the original county-to-county migration data from the  <a href="https://www.census.gov/data/tables/2015/demo/geographic-mobility/county-to-county-migration-2011-2015.html" target="_blank">Census</a> (the In-, Out-, Net, and Gross Migration file). Clean up and format the data to create an animated flow map to show the TOP 10 county level NET migration (may be negative values, be careful about the flow direction) in the entire U.S. (2011-2015).</li>
                     </ul><br>
 
             <br><br>
