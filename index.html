@@ -88,10 +88,10 @@
                          
                   <p><a id="format" title="Format Data" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Format Data</h3>
-                     <p><i class="fas fa-ghost fa-spin"></i>&nbsp; The flowmap plugin requires the input data to be a <b>GeoJSON point layer</b> in a specific format. This layer expects that <b>both origin and destination coordinates</b> (lat and lon) and <b>other attributes (e.g., id of origin and destination, flow data to be mapped, etc)</b> are available in the layer's attribute table.</p>  
-                    <p><i class="fas fa-ghost fa-jump-over"></i> &nbsp;We do have the CSV file with origin and destination ids and flow data. However, the CSV file does <b>not</b> contain any coordinates data. The only locational information we have is the name of each counties and state.</p>
-                    <p><i class="fas fa-ghost fa-spin"></i> &nbsp;How do we format the data to be used with the plugin? - I will show you how I did it in this step.</p>
-                    <p><i class="fas fa-ghost fa-spin"></i> &nbsp;If you already have some GIS background, you are welcome to try this step on your own and let us know if you figure out a different/better approach. Below is an example of the final point layer's attribute table. </p>
+                     <p><i class="fas fa-route"></i>&nbsp; The flowmap plugin requires the input data to be a <b>GeoJSON point layer</b> in a specific format. This layer expects that <b>both origin and destination coordinates</b> (lat and lon) and <b>other attributes (e.g., id of origin and destination, flow data to be mapped, etc)</b> are available in the layer's attribute table.</p>  
+                    <p><i class="fas fa-route"></i> &nbsp;We do have the CSV file with origin and destination ids and flow data. However, the CSV file does <b>not</b> contain any coordinates data. The only locational information we have is the name of each counties and state.</p>
+                    <p><i class="fas fa-route"></i> &nbsp;How do we format the data to be used with the plugin? - I will show you how I did it in this step.</p>
+                    <p><i class="fas fa-route"></i> &nbsp;If you already have some GIS background, you are welcome to try this step on your own and let us know if you figure out a different/better approach. Below is an example of the final point layer's attribute table. </p>
                     <ul>
                         <li>Since we need the spatial information of the counties, the first step I did was to get a counties shapefile from the Census (get the shapefile <a href="https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html" target="_blank"><b>here</b></a>).</li> 
                         
@@ -151,7 +151,9 @@
                         <li>Once the layer is added, remove other layers and you should see <b>a single point</b> which is the location of Cook County, IL (County_A) as we chose to display the layer using county A's coordinates.</li>
                     
                         
-                        <li> We are finally here! Save the layer as a <b>GeoJson</b> file (<b>EPSG:4326 - WGS 84</b> as the projection). </li>
+                        <li> We are ALMOST there! The last step before saving a geojson is to <b>select a subset of data/flows</b> you are intended to map so that the map doesn't look too busy. You may sort the data in the attribute table and select the rows. <ul>
+                            <li>For example, I will map the top 10 net migration from Cook County so I sort the <code>NetB2A</code> column ASCENDINGLY and select the the first 10 rows by highlighting them in the attribute table.</li> </ul></li>
+                            <li>Save the layer (select to <span style="color:red; font-weight:bold;"> Save only selected features</span>) as a <b>GeoJson</b> file (<b>EPSG:4326 - WGS 84</b> as the projection). </li>
                         <li>Create a <b>new file folder</b> (e.g., lab6) for this lab.</li>
                           <li>Next, use <b>Atom</b> to open the GeoJSON file, add the variable line at the beginning as we have been doing. Save the changed GeoJSON as <code>cook.js</code> to your <b>lab6 folder</b>. </li>
                         </ul>
