@@ -190,7 +190,7 @@
                       <li>Reference the data file in the <code>head</code> section as usual:
                       <pre><code class="language-html">&lt;script type=&quot;text/javascript&quot; src=&quot;cook.js&quot;&gt;&lt;/script&gt;</code></pre></li>
 
-                      <li>The flows are added through the <code>L.canvasFlowmapLayer</code> function. Add the following lines BELOW the <code>L.tileLayer</code>. Read the comments for more explanations and let me know if you have any questions.
+                      <li>The flows are added through the <code>L.canvasFlowmapLayer</code> function. Add the following lines BELOW the <code>L.tileLayer</code> part. Read the comments for more explanations and let me know if you have any questions.
                       <pre><code class="language-javascript">L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
   originAndDestinationFieldIds: {
     originUniqueIdField: 'GEOID_A',  //origin ID, use GEOID_B if you want to reverse the flow
@@ -205,7 +205,7 @@
     }
   },
 
-  // Options to customize the flow map, check out the link below
+  // Options to customize the flow map, check out the link below for more
   // https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#options-and-property-summary
   pathDisplayMode: 'all',
   animationStarted: true,
