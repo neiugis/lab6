@@ -231,11 +231,11 @@
 //This example demonstrates the use of graduated symbols (class breaks) for the flowlines
 //Other options: https://developers.arcgis.com/documentation/common-data-types/renderer-objects.htm
   type: 'classBreaks',
-  field: 'Net_B2A', // This is the field I intended to use for symbolizing the lines
+  field: 'Net_B2A', // The field/value to be used for symbolizing the lines
 
   // Define the classes and symbols below
   classBreakInfos: [{
-    classMinValue: -5589,  // break values of the class
+    classMinValue: -5589,  // break values of this class, using field values defined above
     classMaxValue: -4000,
     symbol: {  // Define the symbology for this class
                // See an example from the documentation:https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/blob/master/docs/class-breaks-symbology/index.html#L94-L137
@@ -283,7 +283,7 @@
 
                 <p><a id="title" title="Add Map Title" class="toc-item"></a></p>
                 <h3><i class="fa fa-paint-brush"></i> Add Map Title as a Control Pane</h3>
-                <p>A little extra, we will try another way of adding titles to the map - with a Leaflet control, as opposed to using the <code>&lt;h&gt;</code> tag. We actually have used this function before for adding the legend. Adding a fixed map title would be easier.</p>
+                <p>A little extra here, we will try another way of adding map title - with a Leaflet control, as opposed to using the <code>&lt;h&gt;</code> tag. We actually have used this function before for adding the legend. Adding a fixed map title would be easier.</p>
 
                 <ul>
                   <li>Place the following lines in the <code>script</code> section to add the control for the title:
