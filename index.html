@@ -149,16 +149,19 @@
                         <li>Recall that we need a point layer with these attributes for the flow map. So we are not there yet, but very close. </li>
 
                         <li>Use the <b>Add Delimited Text Layer</b> button to add the final table, choose X field (A_lon) and Y field (A_lat) to define the points this time as we have the coordinates now.
-                        <center><img alt="" src="img/points.png" width="76%" ></center>
-                        </li>
-                        <li>Once the layer is added, remove other layers and you should see <b>a single point</b> which is the location of Cook County, IL (County_A) as we chose to display the layer using county A's coordinates.</li>
+                        <center><img alt="" src="img/points.png" width="76%" ></center></li>
+                        <li>Select <b>WGS 84</b> as the CRS in the CRS Selector window.</li>
+                        <li>Once the layer is added, remove other layers and you will see <b>a single location (actually many points at the same location)</b> which is the location of Cook County, IL (County_A) as we chose to display the layer using county A's coordinates.
+                          <br><i class="fa fa-spinner fa-pulse  fa-fw"></i> You may choose county B's coordinates when displaying the points, which doesn't matter for using the flow map functions (as long as we have the same number of points).</li>
 
 
-                        <li> We are ALMOST there! The last step before saving a geojson is to <b>select a subset of data/flows</b> you are intended to map so that the map doesn't look too busy. You may sort the data in the attribute table and select the rows. <ul>
-                            <li>For example, I will map the top 10 net migration from Cook County so I sort the <code>NetB2A</code> column ASCENDINGLY and select the the first 10 rows by highlighting them in the attribute table.</li> </ul></li>
+                        <li> We are ALMOST there! The last step before saving a geojson is to <b>select a subset of data/flows</b> you are intended to map so that the map doesn't look too busy. You may sort the data in the attribute table and select the rows/flows you would like to focus on. <ul>
+                          <li>Please spend some time here and make sure you truely understand the data, which can be confusing with the two way flows and both positive and negative numbers.</li>
+                            <li>For example, I will map the top 10 net migration from Cook County (origin) so I sort the <code>NetB2A</code> column ASCENDINGLY and select the the first 10 rows by highlighting them in the attribute table. </li> </ul>
+                          <center><img alt="" src="img/select.png" width="92%" ></center></li>
                             <li>Save the layer (select to <span style="color:red; font-weight:bold;"> Save only selected features</span>) as a <b>GeoJson</b> file (<b>EPSG:4326 - WGS 84</b> as the projection). </li>
                         <li>Create a <b>new file folder</b> (e.g., lab6) for this lab.</li>
-                          <li>Next, use <b>Atom</b> to open the GeoJSON file, add the variable line at the beginning as we have been doing. Save the changed GeoJSON as <code>cook.js</code> to your <b>lab6 folder</b>. </li>
+                          <li>Next, use <b>Atom</b> to open the GeoJSON file, <b>add the variable definition line</b> at the beginning as we have been doing. Save the changed GeoJSON as <code>cook.js</code> to your <b>lab6 folder</b>. </li>
                         </ul>
 
 
@@ -210,32 +213,24 @@
   animationDuration: 2000
 }).addTo(map);</code></pre></li>
 
-                      <li>Since we chose to add all the flows, the map looks quite busy but it worked (<a href="" target="_blank">sample code</a>):</li>
+                      <li>The map shows the flows you have selected and saved (<a href="" target="_blank">sample code</a>):</li>
                     <iframe id="final" src="map/base.html" width=98% height=520 frameborder=0></iframe></ul>
 
 
-                  <p><a id="custom" title="" class="toc-item"></a></p>
-                  <h3><i class="fa fa-paint-brush"></i> </h3>
+                  <p><a id="custom" title="Customize Flowlines" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Customize Flowlines</h3>
 
                   <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Deliverables</h3>
-                     <p>For this lab, there are <b>two datasets you may choose ONE</b> for making your final map: </p>
-                    <ul>
+                     <p>For the deliverables, we will use the same migration data. </p>
 
-                    <li><a href="https://drive.google.com/file/d/1jlZMJRFz2tIMnvK2MR9jBFCxuT6iMBKe/view?usp=sharing" target="_blank">Chicago ethnic groups and income at Census tract level</a>, OR</li>
-                        <li><a href="https://drive.google.com/file/d/1FKacNiElJhvoIxKw2BopRtaaHiRskGGR/view?usp=sharing" target="_blank">U.S. age groups by state</a>.</li></ul>
-
-
-                   <p>You may need to <b>calculate new field(s)</b> for producing the final maps, click <a href="https://docs.qgis.org/2.14/en/docs/user_manual/working_with_vector/field_calculator.html" target="_blank">here</a> to learn how Field Calculator works in QGIS. It is possible to calculate new field using math operators and more complicated functions. In addition, you could calculate polygon areas in QGIS, which would be useful for standardizing aggregated data. I have made two short tutorials and hope they are helpful:</p>
-                    <ul><li><a href="CalculateArea.pdf" target="_blank">Calculate polygon areas</a> in QGIS.</li>
-                        <li><a href="CalculateDensity.pdf" target="_blank">Calculate population density</a> in QGIS, given a total population field and a total area field (in appropriate areal unit for measuring population density, e.g., square miles, square kilometers).</li></ul>
                         Then, create TWO maps in <mark>FULL SCREEN MODE</mark> with the dataset you have selected:
                     <ul><li>A <mark>choropleth map with pie (NOT <strike>donut</strike>) charts</mark> as popups or tooltips when mouseover. Make sure to use <mark>appropriate attributes (standardized data) and classes</mark> for the choropleth map.
                         </li>
                         <li>Another <mark>choropleth map with a different type (not <strike>pie</strike> or <strike>donut</strike>) of charts</mark> as popups or tooltips when mouseover.
                         </li>
                         <li>Your final map will be graded based on its <b>overall design and accuracy, e.g., proper use of attributes and charts, colors, labels, choropleth map symbols and data classification, etc.</b></li>
-                        <li>Host your two maps separately via GitHub (Make sure to rename the html file as <code>index.html</code> and upload any associated data files to the repository!!!) and submit the two urls through <a href="https://neiu.desire2learn.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?db=74999&ou=2924591" target="_blank">D2L</a>. </li><br>
+                        <li>Host your two maps separately via GitHub (Make sure to rename the html file as <code>index.html</code> and upload any <b>associated data files and library file</b> to the repository!!!) and submit the two urls through <a href="https://neiu.desire2learn.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?db=74999&ou=2924591" target="_blank">D2L</a>. </li><br>
 
                     </ul>
 
