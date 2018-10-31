@@ -67,7 +67,7 @@
 
                      <p>We will map county-to-county migration using data from the U.S. Census Bureau.</p>
                           <ul>
-                              <li><span style="color: darkred; font-weight: bold">Download the lab data <a href="https://drive.google.com/file/d/1HMErIa3W6T_UwlpgLEbuTW4B0s8Gh-qS/view?usp=sharing" target="_blank">here</a>.</span> Extract the data to your desired directory. We will use the same dataset for creating the final deliverables.</li>
+                              <li><span style="color: darkred; font-weight: bold">Download the lab data <a href="https://drive.google.com/file/d/1e-FYr82HEcHlVRG8lcl7aqc1LuAnknro/view?usp=sharing" target="_blank">here</a>.</span> Extract the data to your desired directory. We will use the same dataset for creating the final deliverables.</li>
 
                               <li>The folder contains a CSV file, with an associated CSVT file which defines data types when the data is added to QGIS. You don't need to do anything with the file here, just make sure they are stored in the same folder.</li>
 
@@ -130,12 +130,13 @@
                                 <center><img alt="" src="img/join.png" width="66%" ></center></li>
                         <li>Click <b>OK</b> and <b>OK</b> again to apply the changes. Return to the CSV table and verify if the table join was successful (you should see the A_lon and A_lat added to the table, the values are the same for each row as they are all Cook County - County_A/GEOID_A).</li>
 
-                        <li>If you try to add another table join right away, you will find the point layer is not available to be joined a second time. To address this, we could save the joined table to a new file and then come back to add another join. <b>Right-click</b> the table and select <b>Save As</b> to save the table as a CSV file, make sure to select <b>YES</b> for to CREATE_CSVT under Layer Options (see image below).
+                        <li>If you try to add another table join right away, you will find the point layer is not available to be joined for a second time. To address this, we could save the joined table to a new file and then come back to add another join.
+                          <br><b>Right-click</b> the table and select <b>Save As</b> to save the table as a CSV file, make sure to select <b>YES</b> for to CREATE_CSVT under Layer Options (see image below).
                             <br>Again, csvt file defines field data types, <i>e.g., string, integer,</i> of a csv table in QGIS, which is critical for mapping/analysis purposes.
                          <center><img alt="" src="img/save.png" width="66%" ></center></li>
 
                         <li>The new table should be added to QGIS automatically. REMOVE the old table to avoid confusion.</li>
-                        <li><span style="color:red; font-weight:bold; font-style:italic ">Your Turn</span>: Perform another table join to the new table to join the county B coordinates to it. VERIFY the results before continue.</li>
+                        <li><span style="color:red; font-weight:bold; font-style:italic ">Your Turn</span>: Perform another table join to the new table to join the county B coordinates to it. VERIFY the results before continue. If you see NULL values, there might be something wrong.</li>
 
                         <li>If you have done everything correctly, the table contains all the attributes, including origin/destination coordinates, we need and should look like below:
                         <center><img alt="" src="img/.png" width="66%" ></center>
