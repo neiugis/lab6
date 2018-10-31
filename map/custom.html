@@ -10,26 +10,26 @@
         <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
         integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
         crossorigin=""></script>
-        
+
         <!-- Load animation tweening library requirement for CanvasFlowMapLayer -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.6.0/Tween.min.js"></script>
-        
+
         <!-- then load CanvasFlowMapLayer -->
         <script src="CanvasFlowmapLayer.js"></script>
-        
+
         <script type="text/javascript" src="cook.js"></script>
-        
+
         <style type="text/css">
-          html, body { 
-            margin: 0; 
-            padding: 0; 
-            height: 100%; 
+          html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
             }
-            
-          #map { 
-            min-height: 100%; 
+
+          #map {
+            min-height: 100%;
             }
-            
+
         </style>
 
     </head>
@@ -40,15 +40,15 @@
         <script type="text/javascript">
 
           var map = L.map('map', {
-              center: [38.16, -100.96],
-              zoom: 3.4
+              center: [38.16, -96.96],
+              zoom: 5
           });
 
           L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                attribution: '@ <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             }).addTo(map);
-            
-          var flowLayer = L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
+
+          L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
               originAndDestinationFieldIds: {
                 originUniqueIdField: 'GEOID_A',  //origin ID, use GEOID_B if you want to reverse the flow
                 originGeometry: { //origin coordinates
@@ -61,32 +61,59 @@
                   y: 'B_lat'
                 }
               },
-              
+
+              canvasBezierStyle: {
+              //This example demonstrates the use of graduated symbols (class breaks) for the flowlines
+              //Other options: https://developers.arcgis.com/documentation/common-data-types/renderer-objects.htm
+                type: 'classBreaks',
+                field: 'Net_B2A', // This is the field I intended to use for symbolizing the lines
+
+                // Define the classes and symbols below
+                classBreakInfos: [{
+                  classMinValue: -5589,  // break values of the class
+                  classMaxValue: -4000,
+                  symbol: {  // Define the symbology for this class
+                             // See an example from the documentation: https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/blob/master/docs/class-breaks-symbology/index.html#L94-L137
+                    strokeStyle: '#AD0755',  // flow line color
+                    lineWidth: 10,  // flow line width
+                    lineCap: 'round',  // shape of the stroke end
+                  }
+                }, {  // another class
+                  classMinValue: -3999,
+                  classMaxValue: -3000,
+                  symbol: {
+                    strokeStyle: '#B21D63',
+                    lineWidth: 6,
+                    lineCap: 'round',
+                  }
+                }, {  // one more class
+                  classMinValue: -2999,
+                  classMaxValue: -2000,
+                  symbol: {
+                    strokeStyle: '#CA2070',
+                    lineWidth: 3.5,
+                    lineCap: 'round',
+                  }
+                }, {  // more classes if needed
+                    classMinValue: -1999,
+                    classMaxValue: 0,
+                    symbol: {
+                      strokeStyle: '#F965AA',
+                      lineWidth: 2,
+                      lineCap: 'round',
+                    }
+                }],
+              },
               // Options to customize the flow map, check out the link below
               // https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#options-and-property-summary
-              pathDisplayMode: 'selection',  
+              pathDisplayMode: 'all',
               animationStarted: true,
               animationEasingFamily: 'Cubic',
               animationEasingType: 'In',
               animationDuration: 2000
             }).addTo(map);
-            
-//           oneToManyFlowmapLayer.on('click', function(e) {
-//              if (e.sharedOriginFeatures.length) {
-//                oneToManyFlowmapLayer.selectFeaturesForPathDisplay(e.sharedOriginFeatures, 'SELECTION_NEW');
-//              }
-//              if (e.sharedDestinationFeatures.length) {
-//                oneToManyFlowmapLayer.selectFeaturesForPathDisplay(e.sharedDestinationFeatures, 'SELECTION_NEW');
-//              }
-//           });
-            
-            
-           flowLayer.selectFeaturesForPathDisplayById('GEOID_B', '17101', false, 'SELECTION_NEW');
-           flowLayer.selectFeaturesForPathDisplayById('GEOID_B', '17109', false, 'SELECTION_ADD');
-            flowLayer.selectFeaturesForPathDisplayById('GEOID_B', '17029', false, 'SELECTION_ADD');
-            flowLayer.selectFeaturesForPathDisplayById('GEOID_B', '18097', false, 'SELECTION_ADD');
-           flowLayer.selectFeaturesForPathDisplayById('GEOID_B', '06085', false, 'SELECTION_ADD');
-            flowLayer.selectFeaturesForPathDisplayById('GEOID_B', '47157', false, 'SELECTION_ADD');
+
+
 
         </script>
    </body>
