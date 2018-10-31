@@ -217,14 +217,65 @@
                     <iframe id="final" src="map/base.html" width=98% height=520 frameborder=0></iframe></ul>
 
 
+
+
                   <p><a id="custom" title="Customize Flowlines" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Customize Flowlines</h3>
                   <p>All the flowlines are displayed in the same style by default. We could further customize the lines by using thicker lines for high volumn flows, changing colors, etc. </p>
                   <ul>
+                  <li>Place the following lines INSIDE the <code>L.canvasFlowmapLayer</code> function, under the Options (indicated in comments) part:
+                  <pre><code class="language-javascript">canvasBezierStyle: {
+//This example demonstrates the use of graduated symbols (class breaks) for the flowlines
+//Other options: https://developers.arcgis.com/documentation/common-data-types/renderer-objects.htm
+  type: 'classBreaks',
+  field: 'Net_B2A', // This is the field I intended to use for symbolizing the lines
+
+  // Define the classes and symbols below
+  classBreakInfos: [{
+    classMinValue: -5589,  // break values of the class
+    classMaxValue: -4000,
+    symbol: {  // Define the symbology for this class
+               // See an example from the documentation:https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/blob/master/docs/class-breaks-symbology/index.html#L94-L137
+      strokeStyle: '#AD0755',  // flow line color
+      lineWidth: 10,  // flow line width
+      lineCap: 'round',  // shape of the stroke end
+    }
+  }, {  // another class
+    classMinValue: -3999,
+    classMaxValue: -3000,
+    symbol: {
+      strokeStyle: '#B21D63',
+      lineWidth: 6,
+      lineCap: 'round',
+    }
+  }, {  // one more class
+    classMinValue: -2999,
+    classMaxValue: -2000,
+    symbol: {
+      strokeStyle: '#CA2070',
+      lineWidth: 3.5,
+      lineCap: 'round',
+    }
+  }, {  // more classes if needed
+      classMinValue: -1999,
+      classMaxValue: 0,
+      symbol: {
+        strokeStyle: '#F965AA',
+        lineWidth: 2,
+        lineCap: 'round',
+      }
+  }],
+},</code></pre></li>
+
+
 
 
                   <li>The map shows the flows you have selected and saved (<a href="https://raw.githubusercontent.com/neiugis/lab6/gh-pages/map/custom.html" target="_blank">sample code</a>):</li>
                 <iframe id="final" src="map/custom.html" width=98% height=520 frameborder=0></iframe></ul>
+
+
+
+
 
                   <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Deliverables</h3>
@@ -232,9 +283,9 @@
 
                     <ul><li>A <mark>choropleth map with pie (NOT <strike>donut</strike>) charts</mark> as popups or tooltips when mouseover. Make sure to use <mark>appropriate attributes (standardized data) and classes</mark> for the choropleth map.
                         </li>
-                        <li>Another <mark>choropleth map with a different type (not <strike>pie</strike> or <strike>donut</strike>) of charts</mark> as popups or tooltips when mouseover.
+                        <li>
                         </li>
-                        <li>Your final map will be graded based on its <b>overall design and accuracy, e.g., proper use of attributes and charts, colors, labels, choropleth map symbols and data classification, etc.</b></li>
+                        <li>Your final map will be graded based on its <b>overall design and accuracy, e.g., proper use of attributes, etc.</b></li>
                         <li>Host your two maps separately via GitHub (Make sure to rename the html file as <code>index.html</code> and upload any <b>associated data files and library file</b> to the repository!!!) and submit the two urls through <a href="https://neiu.desire2learn.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?db=74999&ou=2924591" target="_blank">D2L</a>. </li> <br>
                         <li><b>EXTRA CREDITS (8 pts):</b> Download the original county-to-county migration data from the  <a href="https://www.census.gov/data/tables/2015/demo/geographic-mobility/county-to-county-migration-2011-2015.html" target="_blank">Census</a> (the In-, Out-, Net, and Gross Migration file). Create a animated flow map to show the TOP 10 county level NET migration in the entire U.S. (2011-2015).</li>
                     </ul><br>
