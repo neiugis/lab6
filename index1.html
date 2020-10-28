@@ -126,13 +126,13 @@
                         <center><img alt="" src="img/nogeo.png" width="95%" ></center></li>
 
                         <li>Since we need migration origin/destination information for mapping (as opposed to all US counties), we should use the <b>CSV file as the Table Join target</b>, and join both county A and county B coordinates from the points layer to the CSV (so that we can map them as either origins or destinations). I will only show you how to join county A coordinates and you will apply the technique to join county B coordinates.</li>
-                            <li>In QGIS, right-click the CSV file (<b>cookcounty_migration</b>) and select <b>Properties > Joins</b>, click the <b>Add</b> button <img alt="" src="img/but4.png"> at the bottom.
-                              <br>Set up the Join and Target field properly (Note <b>GEOIDs of the counties are the keys for the table join to work, the field names in each table could be different as long as the values are the same</b>). Make sure to select the newly calculated lat and lon as fields to be joined. I also added A_ as the field name prefix to remind myself that these are county A coordinates.
+                            <li>In QGIS, right-click the CSV file (<b>cookcounty_migration</b>) and select <b>Properties > Joins</b>, click the <b>Add</b> button <img alt="" src="img/but4.png"> at the bottom.</li>
+                              <li>Set up the Join and Target field properly. Note <b>GEOIDs of the counties are the keys for the table join to work, the field names in each table could be different as long as the values are the same</b>. <br>Make sure to select the newly calculated lat and lon as fields to be joined. I also added A_ as the field name prefix to remind myself that these are county A coordinates. Overall, this operation will join the county A lat and lon to the CSV table.
                                 <center><img alt="" src="img/join.png" width="66%" ></center></li>
-                        <li>Click <b>OK</b> and <b>OK</b> again to apply the changes. Return to the attribute table of the CSV file and verify if the table join was successful (you should see the A_lon and A_lat added to the table, the values are the same for each row as they are all Cook County - County_A/GEOID_A).</li>
+                        <li>Click <b>OK</b> and <b>OK</b> again to apply the changes. Return to the attribute table of the CSV file and verify if the table join was successful (you should see the A_lon and A_lat added to the table, the values are the same for each row as the GEOID_As are all Cook County).</li>
 
-                        <li>If you try to add another table join right away, you will find the centroids layer is not available to be joined for a second time. To address this issue, we could save the joined table to a new file and then come back to add another join.
-                          <br><b>Right-click</b> the table and select <b>Export > Save Features As</b> to save the table as a CSV file, make sure to select <b>YES</b> for to CREATE_CSVT under Layer Options (see image below).
+                            <li>If you try to add another table join right away, you will find the centroids layer is not available to be joined for a second time. To address this issue, we could save the joined table to a new file and then come back to add another join.</li>
+                          <li><b>Right-click</b> the CSV table (<b>cookcounty_migration</b>) and select <b>Export > Save Features As</b> to save the table as a CSV file, make sure to select <b>YES</b> for to CREATE_CSVT under Layer Options (see image below).
                             <br>Again, csvt file defines field data types, <i>e.g., string, integer,</i> of a csv table in QGIS, which is critical for mapping/analysis purposes.
                          <center><img alt="" src="img/save.png" width="66%" ></center></li>
 
@@ -147,10 +147,10 @@
                         <li><span style="color:red">Also note that Table Join results are <b>TEMPORARY</b>, which means the new fields will get lost if you don't save the results to a new file. </span></li>
                         <li>So, let's save it! Right-click and select <b>Export > Save Features As</b> to save the table as a CSV file, select <b>YES</b> to create CSVT file. </li>
 
-                        <li>Recall that we need a point layer with these attributes for the flow map. So we are not there yet, but very close. </li>
+                        <li>Recall that the Leaflet plugin requires a point layer with these attributes for making the flow map. So we are not there yet, but very close. </li>
 
-                        <li>Use the <b>Add Delimited Text Layer</b> button to add the final table, choose X field (A_lon) and Y field (A_lat) to define the points this time as we have the coordinates now.
-                        <center><img alt="" src="img/points.png" width="76%" ></center></li>
+                        <li>In QGIS, select Layer > Add Layer > <b>Add Delimited Text Layer</b> to add the final table, choose X field (A_lon) and Y field (A_lat) to define the points this time as we have the coordinates now.
+                        <center><img alt="" src="img/points.png" width="100%" ></center></li>
                         <li>Select <b>WGS 84</b> as the CRS in the CRS Selector window.</li>
                         <li>Once the layer is added, remove other layers and you will see <b>a single location (actually many points at the same location)</b> which is the location of Cook County, IL (County_A) as we chose to display the layer using county A's coordinates.
                           <br><i class="fa fa-spinner fa-pulse  fa-fw"></i> You may choose county B's coordinates when displaying the points, which doesn't matter for using the flow map functions (as long as we have the same number of points).</li>
