@@ -98,17 +98,17 @@
 
                         <li>Extract the shapefile and add it to <b>QGIS</b> and you will see the boundary file of U.S. Counties.</li>
                         <li>This is a polygon layer, not a point layer. What we could do is to generate the <b>centroids</b> of polygons to represent each county as a point. In QGIS, go to <b>Vector > Geometry Tools > Centroids</b>, and save the output centroids layer to your desired directory (see images below). Click <b>OK</b> to run.
-                        <img alt="" src="img/centroid.png" width="96%">
-                        <center><img alt="" src="img/cen2.png" width="56%" ></center>
+                        <img alt="" src="img/centroid.png" width="100%">
+                        <center><img alt="" src="img/cen2.png" width="86%" ></center>
                         </li>
 
                         <li>The centroids are generated and added to QGIS automatically. <b>REMOVE</b> the polygon layer to avoid confusion.</li>
                         <li>The next step is <b>IMPORTANT</b>: we will save the centroids with WGS 84 as the coordinate system before calculating the points' latitude and longitude. Otherwise, the coordinates may be incorrects and the points won't be displayed properly on the web map.
                           <ul><li>Right-click the centroid layer in the Layers Panel and select <b>Export > Save Features As</b>, save the layer as a <b>ESRI Shapefile</b> with a CRS of <b>WGS 84</b> (see image below).</li></ul>
                             <p>Note we are NOT saving the layer as geojson at this point since there are still a few more steps before creating the final geojson data.</p>
-                        <center><img alt="" src="img/wgs84.png" width="66%" ></center></li>
+                        <center><img alt="" src="img/wgs84.png" width="72%" ></center></li>
 
-                            <li>Once we have the county centroids in WGS 84, we could calculate the latitude and longitude for each point. <b>Remove the old centroid layer</b>.</li>
+                            <li>Once we have the county centroids in WGS 84, we could calculate the latitude and longitude of each point. <b>Remove the old centroid layer</b>.</li>
                             <li>Open the layer's attribute table, click the <b>Field Calculator</b> button <img alt="" src="img/but1.png"> from the menu bar. </li>
                                 <li>Let's first calculate the <b>longitude</b> of the points. Create a NEW <b>Decimal Number</b> field with <b>Precision 4</b> (number of decimal places). Select <b>$x</b> under Geometry as the Expression, which will return the x coordinate of the points in the layer's coorinate system (i.e., longitude as we are using WGS 84 as the coordinate system here). Click OK to calculate the new field.
                                 <center><img alt="" src="img/cal.png" width="78%" ></center></li>
