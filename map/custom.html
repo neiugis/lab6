@@ -3,16 +3,16 @@
     <head>
         <title>Lab 6</title>
 
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin=""/>
 
-        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
-        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
 
         <!-- Load animation tweening library requirement for CanvasFlowMapLayer -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.6.0/Tween.min.js"></script>
+        <script src="https://unpkg.com/@tweenjs/tween.js@18.5.0/dist/tween.umd.js"></script>
 
         <!-- then load CanvasFlowMapLayer -->
         <script src="CanvasFlowmapLayer.js"></script>
@@ -41,7 +41,7 @@
 
           var map = L.map('map', {
               center: [38.16, -96.96],
-              zoom: 5
+              zoom: 4.2
           });
 
           L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -66,14 +66,14 @@
               //This example demonstrates the use of graduated symbols (class breaks) for the flowlines
               //Other options: https://developers.arcgis.com/documentation/common-data-types/renderer-objects.htm
                 type: 'classBreaks',
-                field: 'Net_B2A', // This is the field I intended to use for symbolizing the lines
+                field: 'Net_B2A', // The field/value to be used for symbolizing the lines
 
                 // Define the classes and symbols below
                 classBreakInfos: [{
-                  classMinValue: -5589,  // break values of the class
+                  classMinValue: -5589,  // break values of this class, using field values defined above
                   classMaxValue: -4000,
                   symbol: {  // Define the symbology for this class
-                             // See an example from the documentation: https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/blob/master/docs/class-breaks-symbology/index.html#L94-L137
+                             // See an example from the documentation:https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/blob/master/docs/class-breaks-symbology/index.html#L94-L137
                     strokeStyle: '#AD0755',  // flow line color
                     lineWidth: 10,  // flow line width
                     lineCap: 'round',  // shape of the stroke end
@@ -104,6 +104,7 @@
                     }
                 }],
               },
+
               // Options to customize the flow map, check out the link below
               // https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#options-and-property-summary
               pathDisplayMode: 'all',
