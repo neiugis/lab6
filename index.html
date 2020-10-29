@@ -91,8 +91,8 @@
                      <p><i class="fas fa-route"></i>&nbsp; The flowmap plugin requires the input data to be a <b>GeoJSON point layer</b> in a specific format. This layer expects that <b>both origin and destination coordinates</b> (lat and lon) and <b>other attributes (e.g., id of origin and destination, flow data to be mapped, etc)</b> are available in the layer's attribute table.</p>
                     <p><i class="fas fa-route"></i> &nbsp;We do have the CSV file with origin and destination ids and flow data. However, the CSV file does <b>not</b> contain any coordinates data. The only locational information we have is the name of each county and state.</p>
                     <p><i class="fas fa-route"></i> &nbsp;How do we format the data to be used with the plugin? - I will show you how I did it in this step.</p>
-                    <p><i class="fas fa-route"></i> &nbsp;If you ave some GIS background, you are welcome to try this step on your own and let me know if you figure out a different/better approach. Below is an example of the final point layer's attribute table after the processing in the folowing steps (Note the four coordinate columns). </p>
-                    <center><img alt="" src="img/table.png" width="93%" ></center>
+                    <p><i class="fas fa-route"></i> &nbsp;If you have some GIS background, you are welcome to try this step on your own and let me know if you figure out a different/better approach. Below is an example of the final point layer's attribute table after the processing in the folowing steps (Note the four coordinate columns). </p>
+                    <center><img alt="" src="img/table.png" width="100%" ></center>
                     <ul>
                         <li>Since we need the spatial information of the counties, the first step I did was to get a U.S. counties shapefile from the Census (get the shapefile <a href="https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_county_5m.zip" target="_blank"><b>here</b></a>).</li>
 
@@ -103,7 +103,7 @@
                         </li>
 
                         <li>The centroids are generated and added to QGIS automatically. <b>REMOVE</b> the polygon layer to avoid confusion.</li>
-                        <li>The next step is <b>IMPORTANT</b>: we will save the centroids with WGS 84 as the coordinate system before calculating the points' latitude and longitude. Otherwise, the coordinates may be incorrects and the points won't be displayed properly on the web map.
+                        <li>The next step is <b>IMPORTANT</b>: we will save the centroids with WGS 84 as the coordinate system before calculating the points' latitude and longitude. Otherwise, the coordinates may be incorrect and the points won't be displayed properly on the web map.
                           <ul><li>Right-click the centroid layer in the Layers Panel and select <b>Export > Save Features As</b>, save the layer as a <b>ESRI Shapefile</b> with a CRS of <b>WGS 84</b> (see image below).</li></ul>
                             <p>Note we are NOT saving the layer as geojson at this point since there are still a few more steps before creating the final geojson data.</p>
                         <center><img alt="" src="img/wgs84.png" width="72%" ></center></li>
@@ -161,7 +161,7 @@
                             <li><b>Export the layer as a ESRI Shapefile before continue</b> so that you don't lose the steps you have done so far!</li>
 
                         <li> We are ALMOST there! The last step before saving a geojson is to <b>select a subset of data/flows</b> you are intended to map so that the map doesn't look too busy. You may sort the data in the attribute table and select the rows/flows you would like to focus on. <ul>
-                          <li>Please spend some time here and make sure you truely understand the data, which can be confusing with the two way flows and both positive and negative numbers.</li>
+                          <li>Please spend some time here and make sure you fully understand the data, which can be confusing with the two way flows and both positive and negative numbers.</li>
                             <li>For example, I will map the top 10 net migration from Cook County (origin) so I sort the <code>NetB2A</code> column ASCENDINGLY and select the the first 10 rows by highlighting them in the attribute table. </li> </ul>
                           <center><img alt="" src="img/select.png" width="100%" ></center></li>
                             <li>Export the layer (select <span style="color:red; font-weight:bold;"> Save Selected Features As</span>) as a <b>GeoJSON</b> file (<b>EPSG:4326 - WGS 84</b> as the CRS). </li>
