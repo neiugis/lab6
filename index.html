@@ -67,15 +67,14 @@
 
                      <p>We will map county-to-county migration using data from the U.S. Census Bureau.</p>
                           <ul>
-                              <li><span style="color: darkred; font-weight: bold">Download the lab data <a href="https://drive.google.com/file/d/1e-FYr82HEcHlVRG8lcl7aqc1LuAnknro/view?usp=sharing" target="_blank">here</a>.</span> Extract the data to your desired directory. You will use the same dataset to create the final deliverables.</li>
+                              <li><span style="color: darkred; font-weight: bold">Download the lab data <a href="https://drive.google.com/file/d/1yFdvVKe5qNyIIgKE6b6FuqGl6AdAotcm/view?usp=sharing" target="_blank">here</a>.</span> Extract the data to your desired directory. You will use the same dataset to create the final deliverables.</li>
 
-                              <li>The folder contains a CSV file, with an associated CSVT file which defines data types when the CSV is added to QGIS. You don't need to do anything with the file, just make sure they are always stored in the same folder.</li>
 
-                              <li>The table is a subset from the <a href="https://www.census.gov/data/tables/2020/demo/geographic-mobility/county-to-county-migration-2016-2020.html" target="_blank">American Community Survey's County-to-County Migration Flows: 2016-2020</a>. Some preprocessing has been done (if you are interested, you may download the orignal data file (In-, Out-, and Net Migration) to compare).</li>
+                              <li>The dataset was prepared from the <a href="https://www.census.gov/data/tables/2020/demo/geographic-mobility/county-to-county-migration-2016-2020.html" target="_blank">American Community Survey's County-to-County Migration Flows: 2016-2020</a>. Some preprocessing has been done.</li>
 
-                              <li>Open the CSV file in Excel (or Google Sheet) and familiarize yourself with the attributes.
+                              <li>Launch QGIS and add the data. Open the attribute table and familiarize yourself with the attributes.
                                   <ul>
-                                  <li>The table contains In-, Out-, Net, and Gross Migration data for <b>Cook County (<code>County_A</code>), Illinois (<code>State_A</code>)</b> between 2011 and 2015.</li>
+                                  <li>The table contains In-, Out-, and Net Migration data for <b>Cook County (<code>County_A</code>), Illinois (<code>State_A</code>)</b> between 2011 and 2015.</li>
                                   <li>The origin/destination county is shown as <b><code>County_B</code>, <code>State_B</code></b>.</li>
                                   <li>Each county has a <b>unique 5-digit identifier</b> which is provided in the <b><code>GEOID_A</code></b> and <b><code>GEOID_B</code></b> fields. Read <a href="https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html" target="_blank">here</a> to learn more about GEOIDs.</li>
                                   <li><b><code>Flow_B2A</code></b> gives the estimate of people moving from county B to county A (Inflow to Cook County).</li>
