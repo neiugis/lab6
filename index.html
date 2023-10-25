@@ -62,19 +62,20 @@
 
 
 
-                  <p><a id="download" title="Download Migration Data" class="toc-item"></a></p>
-                  <h3><i class="fa fa-paint-brush"></i> Download Migration Data</h3>
+                  <p><a id="download" title="Download and Prepare Migration Data" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Download and Prepare Migration Data</h3>
 
                      <p>We will map county-to-county migration using data from the U.S. Census Bureau.</p>
                           <ul>
-                              <li><span style="color: darkred; font-weight: bold">Download the lab data <a href="https://drive.google.com/file/d/1yFdvVKe5qNyIIgKE6b6FuqGl6AdAotcm/view?usp=sharing" target="_blank">here</a>.</span> Extract the data to your desired directory. You will use the same dataset to create the final deliverables.</li>
+                              <li><span style="color: darkred; font-weight: bold">Download the lab data <a href="https://drive.google.com/file/d/1xkUgFnUVxWcD4CgNTjufopqZ4wSFHhkk/view?usp=sharing" target="_blank">here</a>.</span> Extract the data to your desired directory. You will use the same dataset to create the final deliverables.</li>
 
 
                               <li>The dataset was prepared from the <a href="https://www.census.gov/data/tables/2020/demo/geographic-mobility/county-to-county-migration-2016-2020.html" target="_blank">American Community Survey's County-to-County Migration Flows: 2016-2020</a>. Some preprocessing has been done.</li>
 
-                              <li>Launch QGIS and add the data. Open the attribute table and familiarize yourself with the attributes.
+                              <li>Launch QGIS and add the data. You will see <b>a single location (actually many points at the same location)</b> which is the location of Cook County, IL (County_A)</li>
+                                  <li>Open the attribute table and familiarize yourself with the attributes.
                                   <ul>
-                                  <li>The table contains In-, Out-, and Net Migration data for <b>Cook County (<code>County_A</code>), Illinois (<code>State_A</code>)</b> between 2011 and 2015.</li>
+                                  <li>The table contains In-, Out-, and Net Migration data for <b>Cook County (<code>County_A</code>), Illinois (<code>State_A</code>)</b> between 2016 and 2020.</li>
                                   <li>The origin/destination county is shown as <b><code>County_B</code>, <code>State_B</code></b>.</li>
                                   <li>Each county has a <b>unique 5-digit identifier</b> which is provided in the <b><code>GEOID_A</code></b> and <b><code>GEOID_B</code></b> fields. Read <a href="https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html" target="_blank">here</a> to learn more about GEOIDs.</li>
                                   <li><b><code>Flow_B2A</code></b> gives the estimate of people moving from county B to county A (Inflow to Cook County).</li>
@@ -85,81 +86,10 @@
                     </ul>
 
 
-                  <p><a id="format" title="Format Data" class="toc-item"></a></p>
-                  <h3><i class="fa fa-paint-brush"></i> Format Data</h3>
-                     <p><i class="fas fa-route"></i>&nbsp; The flowmap plugin requires the input data to be a <b>GeoJSON point layer</b> in a specific format. This layer expects that <b>both origin and destination coordinates</b> (lat and lon) and <b>other attributes (e.g., id of origin and destination, flow data to be mapped, etc)</b> are available in the layer's attribute table.</p>
-                    <p><i class="fas fa-route"></i> &nbsp;We do have the CSV file with origin and destination ids and flow data. However, the CSV file does <b>not</b> contain any coordinates data. The only locational information we have is the name of each county and state.</p>
-                    <p><i class="fas fa-route"></i> &nbsp;How do we format the data to be used with the plugin? - I will show you how I did it in this step.</p>
-                    <p><i class="fas fa-route"></i> &nbsp;If you have some GIS background, you are welcome to try this step on your own and let me know if you figure out a different/better approach. Below is an example of the final point layer's attribute table after the processing in the folowing steps (Note the four coordinate columns). </p>
-                    <center><img alt="" src="img/table.png" width="100%" ></center>
-                    <ul>
-                        <li>Since we need the spatial information of the counties, the first step I did was to get a U.S. counties shapefile from the Census (get the shapefile <a href="https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_county_5m.zip" target="_blank"><b>here</b></a>).</li>
-
-                        <li>Extract the shapefile and add it to <b>QGIS</b> and you will see the boundary file of U.S. Counties.</li>
-                        <li>This is a polygon layer, not a point layer. What we could do is to generate the <b>centroids</b> of polygons to represent each county as a point. In QGIS, go to <b>Vector > Geometry Tools > Centroids</b>, and save the output centroids layer to your desired directory (see images below). Click <b>OK</b> to run.
-                        <img alt="" src="img/centroid.png" width="100%">
-                        <center><img alt="" src="img/cen2.png" width="86%" ></center>
-                        </li>
-
-                        <li>The centroids are generated and added to QGIS automatically. <b>REMOVE</b> the polygon layer to avoid confusion.</li>
-                        <li>The next step is <b>IMPORTANT</b>: we will save the centroids with WGS 84 as the coordinate system before calculating the points' latitude and longitude. Otherwise, the coordinates may be incorrect and the points won't be displayed properly on the web map.
-                          <ul><li>Right-click the centroid layer in the Layers Panel and select <b>Export > Save Features As</b>, save the layer as a <b>ESRI Shapefile</b> with a CRS of <b>WGS 84</b> (see image below).</li></ul>
-                            <p>Note we are NOT saving the layer as geojson at this point since there are still a few more steps before creating the final geojson data.</p>
-                        <center><img alt="" src="img/wgs84.png" width="72%" ></center></li>
-
-                            <li>Once we have the county centroids in WGS 84, we could calculate the latitude and longitude of each point. <b>Remove the old centroid layer</b>.</li>
-                            <li>Open the layer's attribute table, click the <b>Field Calculator</b> button <img alt="" src="img/but1.png"> from the menu bar. </li>
-                                <li>Let's first calculate the <b>longitude</b> of the centroids. Create a NEW <b>Decimal Number</b> field with <b>Precision 4</b> (number of decimal places). Select <b>$x</b> under Geometry as the Expression, which will return the x coordinate of the centroids in the layer's coorinate system (i.e., longitude as we are using WGS 84 as the coordinate system here). Click OK to calculate the new field.
-                                <center><img alt="" src="img/cal.png" width="88%" ></center></li>
-
-
-                              <li><span style="color:red; font-weight:bold; font-style:italic ">Your Turn</span>: calculate the <b>latitude</b> of the centroids (another new field), basically the y coordinates (<b>$y</b>) of the points.</li>
-
-                              <li>In the attribute table window, click the <b>Toggle Editing Mode</b> button <img alt="" src="img/but2.png"> from the menu bar and SAVE the changes.</li> </ul><br>
-
-                              <p><i class="fa fa-spinner fa-pulse  fa-fw"></i> Now we have the spatial coordinates of the county centroids, how do we combine this with the tabular migration data? - We may use a GIS technique called <b>Table Join</b>.</p>
-                        <p> <i class="fa fa-spinner fa-pulse  fa-fw"></i> Compare the CSV file and the county centroids, you will find a <b>GEOID</b> column (different header names though) from both. GEOIDs are unique identifiers of the counties which could be used as the <b>"key" to link the two files</b>.</p>
-                        <p><i class="fa fa-spinner fa-pulse  fa-fw"></i> Table Join takes one table (or attribute table of a layer) as a target and join another table to it. The question is: <b>which file do we consider to be the target? </b></p>
-
-                        <ul><li>In QGIS, select Layer > Add Layer > <b>Add Delimited Text Layer</b> to add the CSV table. Since the table doesn't contain any geometry information, we would select <b>no geometry</b> (see image below).
-                        <center><img alt="" src="img/nogeo.png" width="95%" ></center></li>
-
-                        <li>Since we need migration origin/destination information for mapping (as opposed to all US counties), we should use the <b>CSV file as the Table Join target</b>, and join both county A and county B coordinates from the points layer to the CSV (so that we can map them as either origins or destinations). I will only show you how to join county A coordinates and you will apply the technique to join county B coordinates.</li>
-                            <li>In QGIS, right-click the CSV file (<b>cookcounty_migration</b>) and select <b>Properties > Joins</b>, click the <b>Add</b> button <img alt="" src="img/but4.png"> at the bottom.</li>
-                              <li>Set up the Join and Target field properly. Note <b>GEOIDs of the counties are the keys for the table join to work, the field names in each table could be different as long as the values are the same</b>. <br>Make sure to select the newly calculated lat and lon as fields to be joined. I also added A_ as the field name prefix to remind myself that these are county A coordinates. Overall, this operation will join the county A lat and lon to the CSV table.
-                                <center><img alt="" src="img/join.png" width="66%" ></center></li>
-                        <li>Click <b>OK</b> and <b>OK</b> again to apply the changes. Return to the attribute table of the CSV file and verify if the table join was successful (you should see the A_lon and A_lat added to the table, the values are the same for each row as the GEOID_As are all Cook County).</li>
-
-                            <li>If you try to add another table join right away, you will find the centroids layer is not available to be joined for a second time. To address this issue, we could save the joined table to a new file and then come back to add another join.</li>
-                          <li><b>Right-click</b> the CSV table (<b>cookcounty_migration</b>) and select <b>Export > Save Features As</b> to save the table as a CSV file, make sure to select <b>YES</b> for to CREATE_CSVT under Layer Options (see image below).
-                            <br>Again, csvt file defines field data types, <i>e.g., string, integer,</i> of a csv table in QGIS, which is critical for mapping/analysis purposes.
-                         <center><img alt="" src="img/save.png" width="66%" ></center></li>
-
-                        <li>The new table should be added to QGIS automatically. REMOVE the old table to avoid confusion.</li>
-                        <li><span style="color:red; font-weight:bold; font-style:italic ">Your Turn</span>: Perform another table join to the new table to join the county B coordinates to it. VERIFY the results before continue. If you see NULL values, there might be something wrong.</li>
-
-                        <li>If you have done everything correctly, the table contains all the attributes we need, including origin/destination coordinates,  and should look like:
-                        <center><img alt="" src="img/table.png" width="99%" ></center>
-                        </li>
-
-
-                        <li><span style="color:red">Also note that Table Join results are <b>TEMPORARY</b>, which means the new fields will get lost if you don't save the results to a new file. </span></li>
-                        <li>So, let's save it! Right-click and select <b>Export > Save Features As</b> to save the table as a CSV file, select <b>YES</b> to create CSVT file. </li>
-
-                        <li>Recall that the Leaflet plugin requires a point layer with these attributes for making the flow map. So we are not there yet, but very close. </li>
-
-                        <li>In QGIS, select Layer > Add Layer > <b>Add Delimited Text Layer</b> to add the final table
-                            <ul>
-                            <li>Under Geometry Definition, select <b>Point coordinates</b> and choose X field (A_lon) and Y field (A_lat) to define the points</li>
-                                <li>Select <b>WGS 84</b> as the Geometry CRS</li>
-                            </ul> 
-                        <center><img alt="" src="img/points.png" width="100%" ></center></li>
+                 
+                     <ul>
                        
-                        <li>Once the layer is added, remove other layers and you will see <b>a single location (actually many points at the same location)</b> which is the location of Cook County, IL (County_A) as we chose to display the layer using county A's coordinates.
-                          <br><i class="fa fa-spinner fa-pulse  fa-fw"></i> You may choose county B's coordinates when displaying the points, which doesn't matter for using the flow map functions (as long as we have the same number of points).</li>
-                            <li><b>Export the layer as a ESRI Shapefile before continue</b> so that you don't lose the steps you have done so far!</li>
-
-                        <li> We are ALMOST there! The last step before saving a geojson is to <b>select a subset of data/flows</b> you are intended to map so that the map doesn't look too busy. You may sort the data in the attribute table and select the rows/flows you would like to focus on. <ul>
+                        <li>The last step before saving a geojson is to <b>select a subset of data/flows</b> you are intended to map so that the map doesn't look too busy. You may sort the data in the attribute table and select the rows/flows you would like to focus on. <ul>
                           <li>Please spend some time here and make sure you fully understand the data, which can be confusing with the two way flows and both positive and negative numbers.</li>
                             <li>For example, I will map the top 10 net migration from Cook County (origin) so I sort the <code>NetB2A</code> column ASCENDINGLY and select the the first 10 rows by highlighting them in the attribute table. </li> </ul>
                           <center><img alt="" src="img/select.png" width="100%" ></center></li>
