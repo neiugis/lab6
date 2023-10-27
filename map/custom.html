@@ -3,34 +3,26 @@
     <head>
         <title>Lab 6</title>
 
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-        crossorigin=""/>
+         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+           crossorigin=""/>
 
-        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-        crossorigin=""></script>
+         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+           crossorigin=""></script>
 
-        <!-- Load animation tweening library requirement for CanvasFlowMapLayer -->
-        <script src="https://unpkg.com/@tweenjs/tween.js@18.5.0/dist/tween.umd.js"></script>
+           <style type="text/css">
+  html, body { margin: 0; padding: 0; height: 100%; }
+  #map { min-height: 100%; }
+</style>
 
-        <!-- then load CanvasFlowMapLayer -->
-        <script src="CanvasFlowmapLayer.js"></script>
+<!-- Load animation tweening library requirement for CanvasFlowMapLayer -->
+<script src="https://unpkg.com/@tweenjs/tween.js@18.6.4/dist/tween.umd.js"></script>
 
-        <script type="text/javascript" src="cook.js"></script>
+<!-- Load CanvasFlowMapLayer; change the path (relative URL) if necessary -->
+<script src="CanvasFlowmapLayer.js"></script>
 
-        <style type="text/css">
-          html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            }
-
-          #map {
-            min-height: 100%;
-            }
-
-        </style>
+<script type="text/javascript" src="cook.js"></script>
 
     </head>
 
@@ -40,81 +32,74 @@
         <script type="text/javascript">
 
           var map = L.map('map', {
-              center: [38.16, -96.96],
-              zoom: 4.2
+              center: [38.6367781,-95.8374063],
+              zoom: 4
           });
 
-          L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-               attribution: '@ <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            }).addTo(map);
+         L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+           attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
+           maxZoom: 11,
+           minZoom: 3
+         }).addTo(map);
 
-          L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
-              originAndDestinationFieldIds: {
-                originUniqueIdField: 'GEOID_A',  //origin ID, use GEOID_B if you want to reverse the flow
-                originGeometry: { //origin coordinates
-                  x: 'A_lon',
-                  y: 'A_lat'
-                },
-                destinationUniqueIdField: 'GEOID_B', //destination ID
-                destinationGeometry: { //destination coordinates
-                  x: 'B_lon',
-                  y: 'B_lat'
-                }
-              },
+         L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
+          originAndDestinationFieldIds: {
+            originUniqueIdField: 'GEOID_B',  //origin ID, use GEOID_A if you want to reverse the flow
+            originGeometry: { //origin coordinates 
+              x: 'B_lon',
+              y: 'B_lat'
+            },
+            destinationUniqueIdField: 'GEOID_A', //destination ID
+            destinationGeometry: { //destination coordinates
+              x: 'A_lon',
+              y: 'A_lat'
+            }
+          },
 
-              canvasBezierStyle: {
-              //This example demonstrates the use of graduated symbols (class breaks) for the flowlines
-              //Other options: https://developers.arcgis.com/documentation/common-data-types/renderer-objects.htm
-                type: 'classBreaks',
-                field: 'Net_B2A', // The field/value to be used for symbolizing the lines
+          canvasBezierStyle: {
+          //This example demonstrates the use of graduated symbols (class breaks) for the flowlines
+          //Other options: https://developers.arcgis.com/documentation/common-data-types/renderer-objects.htm
+            type: 'classBreaks',
+            field: 'Net_B2A', // The field/value to be used for symbolizing the lines
 
-                // Define the classes and symbols below
-                classBreakInfos: [{
-                  classMinValue: -5589,  // break values of this class, using field values defined above
-                  classMaxValue: -4000,
-                  symbol: {  // Define the symbology for this class
-                             // See an example from the documentation:https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/blob/master/docs/class-breaks-symbology/index.html#L94-L137
-                    strokeStyle: '#AD0755',  // flow line color
-                    lineWidth: 10,  // flow line width
-                    lineCap: 'round',  // shape of the stroke end
-                  }
-                }, {  // another class
-                  classMinValue: -3999,
-                  classMaxValue: -3000,
-                  symbol: {
-                    strokeStyle: '#B21D63',
-                    lineWidth: 6,
-                    lineCap: 'round',
-                  }
-                }, {  // one more class
-                  classMinValue: -2999,
-                  classMaxValue: -2000,
-                  symbol: {
-                    strokeStyle: '#CA2070',
-                    lineWidth: 3.5,
-                    lineCap: 'round',
-                  }
-                }, {  // more classes if needed
-                    classMinValue: -1999,
-                    classMaxValue: 0,
-                    symbol: {
-                      strokeStyle: '#F965AA',
-                      lineWidth: 2,
-                      lineCap: 'round',
-                    }
-                }],
-              },
+            // Define the classes and symbols below
+            classBreakInfos: [{
+              classMinValue: 433,  // break values of this class, using field values defined above
+              classMaxValue: 400,
+              symbol: {  // Define the symbology for this class
+                         // See an example from the documentation:https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/blob/master/docs/class-breaks-symbology/index.html#L94-L137
+                strokeStyle: '#AD0755',  // flow line color
+                lineWidth: 10,  // flow line width
+                lineCap: 'round',  // shape of the stroke end
+              }
+            }, {  // another class
+              classMinValue: 399,
+              classMaxValue: 300,
+              symbol: {
+                strokeStyle: '#B21D63',
+                lineWidth: 6,
+                lineCap: 'round',
+              }
+            }, {  // one more class
+              classMinValue: 299,
+              classMaxValue: 200,
+              symbol: {
+                strokeStyle: '#CA2070',
+                lineWidth: 3.5,
+                lineCap: 'round',
+              }
+            }],
+          },
 
-              // Options to customize the flow map, check out the link below
-              // https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#options-and-property-summary
-              pathDisplayMode: 'all',
-              animationStarted: true,
-              animationEasingFamily: 'Cubic',
-              animationEasingType: 'In',
-              animationDuration: 2000
-            }).addTo(map);
-
-
+          // Some options to customize the flow map, check out the link below for more
+          // https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#options-and-property-summary
+          pathDisplayMode: 'all',
+          animationStarted: true,
+          animationEasingFamily: 'Cubic', // Compare the options:
+                                          // https://jwasilgeo.github.io/Leaflet.Canvas-Flowmap-Layer/docs/comparison/
+          animationEasingType: 'In',
+          animationDuration: 2000  // in millisecond, the larger the number the slower
+        }).addTo(map);
 
         </script>
    </body>
