@@ -33,13 +33,13 @@
 
           var map = L.map('map', {
               center: [38.6367781,-95.8374063],
-              zoom: 5
+              zoom: 4
           });
 
          L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
            attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
            maxZoom: 11,
-           minZoom: 5
+           minZoom: 3
          }).addTo(map);
 
          L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
