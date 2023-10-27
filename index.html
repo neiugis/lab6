@@ -153,7 +153,7 @@
 
                       <li>The map shows the flows you have selected and saved (<a href="https://raw.githubusercontent.com/neiugis/lab6/gh-pages/map/base.html" target="_blank">sample code</a>):</li>
                     <iframe id="final" src="map/base.html" width=98% height=520 frameborder=0></iframe>
-                  Note the <b>flow direction</b> is correctly showing outflow from Cook County to other counties. defined by the origin/destination coordinates in the function. <br>By default, the origin location is displayed in larger yellow circle marker, while destinations are in smallr solid blue circle marker. If you are interested in customizing the markers for the flowmap, check out <a href="https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#style-example" target="_blank">this link</a> (scroll down to the <i>style example</i> portion) for an example.</ul>
+                  Note the <b>flow direction</b> is correctly showing inflow to Cook County defined by the origin/destination coordinates in the function. <br>By default, the origin location is displayed in larger yellow circle marker, while destinations are in smallr solid blue circle marker. If you are interested in customizing the markers for the flowmap, check out <a href="https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#style-example" target="_blank">this link</a> (scroll down to the <i>style example</i> portion) for an example.</ul>
 
 
 
@@ -171,8 +171,8 @@
 
   // Define the classes and symbols below
   classBreakInfos: [{
-    classMinValue: -5589,  // break values of this class, using field values defined above
-    classMaxValue: -4000,
+    classMinValue: 433,  // break values of this class, using field values defined above
+    classMaxValue: 400,
     symbol: {  // Define the symbology for this class
                // See an example from the documentation:https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/blob/master/docs/class-breaks-symbology/index.html#L94-L137
       strokeStyle: '#AD0755',  // flow line color
@@ -180,29 +180,21 @@
       lineCap: 'round',  // shape of the stroke end
     }
   }, {  // another class
-    classMinValue: -3999,
-    classMaxValue: -3000,
+    classMinValue: 399,
+    classMaxValue: 300,
     symbol: {
       strokeStyle: '#B21D63',
       lineWidth: 6,
       lineCap: 'round',
     }
   }, {  // one more class
-    classMinValue: -2999,
-    classMaxValue: -2000,
+    classMinValue: 299,
+    classMaxValue: 200,
     symbol: {
       strokeStyle: '#CA2070',
       lineWidth: 3.5,
       lineCap: 'round',
     }
-  }, {  // more classes if needed
-      classMinValue: -1999,
-      classMaxValue: 0,
-      symbol: {
-        strokeStyle: '#F965AA',
-        lineWidth: 2,
-        lineCap: 'round',
-      }
   }],
 },</code></pre></li>
 
