@@ -129,15 +129,15 @@
                       <li>The flows are added through the <code>L.canvasFlowmapLayer</code> function. Add the following lines BELOW the <code>L.tileLayer</code> part. Read the comments for more explanations and let me know if you have any questions.
                       <pre><code class="language-javascript">L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
   originAndDestinationFieldIds: {
-    originUniqueIdField: 'GEOID_A',  //origin ID, use GEOID_B if you want to reverse the flow
+    originUniqueIdField: 'GEOID_B',  //origin ID, use GEOID_A if you want to reverse the flow
     originGeometry: { //origin coordinates - Cook County as outflow is being mapped in the example
-      x: 'A_lon',
-      y: 'A_lat'
-    },
-    destinationUniqueIdField: 'GEOID_B', //destination ID
-    destinationGeometry: { //destination coordinates
       x: 'B_lon',
       y: 'B_lat'
+    },
+    destinationUniqueIdField: 'GEOID_A', //destination ID
+    destinationGeometry: { //destination coordinates
+      x: 'A_lon',
+      y: 'A_lat'
     }
   },
 
