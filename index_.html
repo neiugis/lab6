@@ -200,7 +200,7 @@
                          <li> Add the lines below to the <code>head</code> section of your map html.
 <div class="code-container">
                                
-                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
                                
                                <pre><code class="language-js">         
 &lt;!-- Load animation tweening library requirement for CanvasFlowMapLayer --&gt;
@@ -212,7 +212,7 @@
                       <li>Reference the data file in the <code>head</code> section as usual:
 <div class="code-container">
                                
-                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
                                
     <pre><code class="language-js">     
 &lt;script type=&quot;text/javascript&quot; src=&quot;cook.js&quot;&gt;&lt;/script&gt;</code></pre></div></li>
@@ -220,7 +220,7 @@
                       <li>The flows are added through the <code>L.canvasFlowmapLayer</code> function. Add the following lines BELOW the <code>L.tileLayer</code> part. Read the comments for more explanations and let me know if you have any questions.
                       <div class="code-container">
                                
-                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
                                
                                <pre><code class="language-js">
 L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
@@ -244,12 +244,12 @@ L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the
   animationEasingFamily: 'Cubic', // Compare the options:
                                   // https://jwasilgeo.github.io/Leaflet.Canvas-Flowmap-Layer/docs/comparison/
   animationEasingType: 'In',
-  animationDuration: 2000  // in millisecond, the larger the number the slower
+  animationDuration: 2000,  // in millisecond, the larger the number the slower
 }).addTo(map);</code></pre></div></li>
 
                       <li>The map shows the flows you have selected and saved (<a href="https://raw.githubusercontent.com/neiugis/lab6/gh-pages/map/base.html" target="_blank">sample code</a>):</li>
                     <iframe id="final" src="map/base.html" width=98% height=520 frameborder=0></iframe>
-                  Note the <b>flow direction</b> is correctly showing inflow to Cook County defined by the origin/destination coordinates in the function. <br>By default, the origin location is displayed in larger yellow circle marker, while destinations are in smaller solid blue circle marker. If you are interested in customizing the markers for the flowmap, check out <a href="https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#style-example" target="_blank">this link</a> (scroll down to the <b>style example</b> portion) for an example.</ul>
+                  Note the <b>flow direction</b> is correctly showing inflow to Cook County defined by the origin/destination coordinates in the function. <br>By default, the origin location is displayed in larger yellow circle marker, while destinations are in smaller solid blue circle marker. If you are interested in customizing the markers for the flowmap, check out <a href="https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#style-example" target="_blank">the style example</a> of the library.</ul>
 
 
 
@@ -261,7 +261,7 @@ L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the
                   <li>Place the following lines INSIDE the <code>L.canvasFlowmapLayer</code> function, check out the sample code below if in doubt:
                   <div class="code-container">
                                
-                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
                                
                                <pre><code class="language-js">
 canvasBezierStyle: {
@@ -320,7 +320,7 @@ canvasBezierStyle: {
                   <li>Place the following lines in the <code>script</code> section (e.g., below <code>L.canvasFlowmapLayer</code>) to add the title as a control pane:
 <div class="code-container">
                                
-                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
                                
                                <pre><code class="language-js">
 var title = L.control({position: 'topright'}); // position of the title
@@ -336,7 +336,7 @@ title.addTo(map);</code></pre></div></li>
                 <li>The title shows up at the top right corner as the position specifies. We could also add some styles to the title control to make it look nice. Place the following lines in the <code>style</code> tag (the <code>head</code>section):
 <div class="code-container">
                                
-                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
                                
                                <pre><code class="language-js">
 .title {
@@ -407,12 +407,12 @@ title.addTo(map);</code></pre></div></li>
                 // Copy the code text to the clipboard
                 navigator.clipboard.writeText(codeText).then(() => {
                     // Change the button text to "Copied!" on success
-                    button.innerHTML = ' <i class="fa-solid fa-check"></i> <strong>Copied!</strong>';
+                    button.innerHTML = ' <i class="fas fa-check"></i> <strong>Copied!</strong>';
                     button.style.backgroundColor = '#6cbf43'; // Green background for success
 
                     // Reset the button text and background color after 2 seconds
                     setTimeout(() => {
-                        button.innerHTML = '<i class="fa-regular fa-copy"></i> <strong>Copy code</strong>';
+                        button.innerHTML = '<i class="far fa-copy"></i> <strong>Copy code</strong>';
                         button.style.backgroundColor = '#566573'; // Reset to original color
                     }, 2000);
                 }).catch(err => {
