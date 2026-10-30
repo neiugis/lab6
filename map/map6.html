@@ -37,6 +37,16 @@
                 box-shadow: 0 0 15px rgba(0,0,0,0.2);
                 border-radius: 5px;
             }
+
+            .legend {
+                padding: 6px 8px;
+                font: 14px/20px Arial, Helvetica, sans-serif;
+                background: rgba(255,255,255,0.8);
+                box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                border-radius: 5px;
+            }
+            .legend .line { display: inline-block; width: 30px; margin-right: 6px; vertical-align: middle; }
+            .legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
         </style>
 
     </head>
@@ -60,7 +70,7 @@
         
         L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
           originAndDestinationFieldIds: {
-            originUniqueIdField: 'GEOID_B',  //origin ID, use GEOID_A if you want to reverse the flow
+            originUniqueIdField: 'GEOID_B',  //origin ID; to reverse the flow, swap the origin and destination settings
             originGeometry: { //origin coordinates 
               x: 'B_lon',
               y: 'B_lat'
@@ -117,6 +127,15 @@
               }],
             },
 
+            onEachFeature: function (feature, layer) {
+              var p = feature.properties;  // the attributes of this row
+              // Is this circle at the location of County B?
+              var atB = feature.geometry.coordinates[0] === p.B_lon;
+              // If yes, use the name of County B; if not, use the name of County A
+              var name = atB ? p.County_B + ', ' + p.State_B : p.County_A + ', ' + p.State_A;
+              layer.bindTooltip(name);  // the county name shows when the mouse is over the circle
+            },
+
         }).addTo(map);
                  
         
@@ -129,6 +148,23 @@
         };
 
         title.addTo(map);
+
+        var legend = L.control({position: 'bottomright'}); // position of the legend
+
+        legend.onAdd = function (map) {
+          var div = L.DomUtil.create('div', 'legend'); // create a div with a class "legend"
+          div.innerHTML = '<b>Net migration to Cook County</b><br>' +
+            // one line per class: height = lineWidth, background = strokeStyle
+            '<i class="line" style="height:10px; background:#AD0755"></i>400 to 433<br>' +
+            '<i class="line" style="height:6px; background:#B21D63"></i>300 to 399<br>' +
+            '<i class="line" style="height:3.5px; background:#CA2070"></i>200 to 299<br>' +
+            // the circle colors are the default colors of the library
+            '<i class="dot" style="background:rgb(195,255,62); border:1px solid #555"></i>Origin county<br>' +
+            '<i class="dot" style="background:rgb(17,142,170)"></i>Destination (Cook County)';
+          return div;
+        };
+
+        legend.addTo(map);
 
         </script>
    </body>

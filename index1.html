@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+      <title>Lab 6 - Flow map </title>
+
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+
+      <link rel="icon" href="paper-plane.png" >
+
+      <link rel="stylesheet" href="gridism.css">
+      <link rel="stylesheet" href="markdown.css">
+      <link rel="stylesheet" href="octicons.css">
+      <link href="main.css" rel="stylesheet">
+      <link href="pygments.css" rel="stylesheet">
+
+      <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <link href="prism.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+
+      <script type="text/javascript" async="" src="ga.js"></script><script src="jquery.js" type="text/javascript"></script>
+      <script src="snap.svg-min.js" type="text/javascript"></script>
+      <script src="application.js" type="text/javascript"></script>
+
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-3769691-29']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+        
+         <style>
+            .code-container {
+            position: relative; /* Allows the button to be positioned inside the container */
+            background-color: #f7f7f8;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: auto; /* Ensures scroll if content exceeds width */
+        }
+
+        /* Style for the pre and code block */
+        .code-container pre {
+            margin: 0;
+            background: none;
+            border: 1px solid #f7f7f8;
+            padding: 0px 0 0 0; /* Add padding to the top for the button */
+            white-space: pre-wrap;  /* Enable line wrapping */
+            word-wrap: break-word;  /* Allow breaking long words */
+            overflow-wrap: break-word; /* Break long words in modern browsers */
+            font-size: 14px;
+            overflow-x: auto; /* Allow horizontal scroll if needed */
+        }
+
+        /* Style for the copy button */
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #566573;
+            color: #fdfefe;
+            border: none;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Tooltip styling */
+        .copy-btn[data-tooltip]::after {
+            content: attr(data-tooltip); /* Display the tooltip text */
+            position: absolute;
+            bottom: 125%; /* Position above the button */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333; /* Dark background for the tooltip */
+            color: #fff; /* White text color */
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0; /* Initially hidden */
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 100; /* Ensure it appears above other elements */
+        }
+
+        /* Show the tooltip on hover */
+        .copy-btn:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Icon inside the button */
+        .copy-btn i {
+            margin-right: 5px; /* Space between the icon and text */
+        }
+
+        /* Change background color when hovering over the button */
+        .copy-btn:hover {
+            background-color: #566573;
+        }
+        
+        </style>
+
+    </head>
+
+    <body style="background-color:#666600">
+
+        <article class="full">
+            <div class="article-heading js-article-heading js-geopattern" style="background-color:#666600">
+                <div class="wrap">
+
+                   <h1>Lab 6. Flow Map <i class="fa fa-leaf"></i></h1>
+                  <h3 style="color:#F6F90A"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 11/11</b></h3>
+                </div>
+            </div>
+
+            <div class="wrap">
+                <div class="toc-wrapper"><ol class="toc js-toc sticky"></ol></div>
+
+                <div class="markdown-body content-body">
+
+
+                  <p><a id="overview" title="Overview" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Overview</h3>
+                  <p><i class="fa fa-spinner fa-spin"></i>  In this lab, we will create a flow map to visualize county-to-county migration data in the U.S. </p>
+                    <p><i class="fa fa-spinner fa-spin"></i>  Specifically, we use a Leaflet plugin called <a href="https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer" target="_blank">Leaflet.Canvas-Flowmap-Layer</a>, which maps the flow of objects from an origin point to a destination point by using a <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve" target="_blank">Bezier curve</a>.</p>
+                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section at the bottom. </p>
+
+
+
+                  <p><a id="download" title="Download and Prepare Migration Data" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Download and Prepare Migration Data</h3>
+
+                     <p>We will map county-to-county migration using data from the U.S. Census Bureau.</p>
+                          <ul>
+                              <li><span style="color: darkred; font-weight: bold"><a href="https://drive.google.com/file/d/11KCDDIoy3k8lPKXuFnB-2c_j-JhPG7tZ/view?usp=sharing" target="_blank">Download the lab data</a>.</span> Extract the data to your desired directory. You will use the same dataset to create the final deliverables.</li>
+
+
+                              <li>The dataset was prepared from the <a href="https://www.census.gov/data/tables/2020/demo/geographic-mobility/county-to-county-migration-2016-2020.html" target="_blank">American Community Survey's County-to-County Migration Flows: 2016-2020</a>. I have preprocessed the data to save time.</li>
+
+                              <li>Launch QGIS and add the data. You will see <b>a single location (actually many points at the same location)</b> which is the location of Cook County, IL.</li>
+                                  <li>Open the attribute table and familiarize yourself with the attributes.
+                                  <ul>
+                                  <li>The table contains In-, Out-, and Net Migration data for <b>Cook County (<code>County_A</code>), Illinois (<code>State_A</code>)</b> between 2016 and 2020.</li>
+                                     
+                                  <li>The origin/destination county is shown as <b><code>County_B</code>, <code>State_B</code></b>.</li>
+                                      <li><b><code>GEOID_A</code></b> and <b><code>GEOID_B</code></b> are the unique identifiers for County A and County B.</li>
+                                  <li><b><code>Flow_B2A</code></b> is the estimate of people moving in from county B to county A (Inflow to Cook County).</li>
+                                  <li><b><code>Flow_A2B</code></b> is the estimate of people moving out from county A to county B (Outflow from Cook County).</li>
+                                  <li><b><code>Net_B2A</code></b> is the net migration from county B to county A (Net inflow to Cook County).</li>
+                                <li>In addition, there are four coordinate fields which are required for making the flow map. The <b><code>A_lon</code></b> and <b><code>A_lat</code></b> are the longitude and latitude of County A and they are all the same, i.e., Cook County. The <b><code>B_lon</code></b> and <b><code>B_lat</code></b> are the longitude and latitude of County B.</li>
+                                      </ul>
+                              </li>
+
+                    </ul>
+
+
+                 
+                     <ul>
+                       
+                        <li>We will <b>select a subset of data/flows</b> to map so that the map does not look too busy. You may sort the data in the attribute table and select the rows/flows you would like to focus on. <ul>
+                          <li>Please spend some time here and make sure you fully understand the data, which can be confusing with the two way flows and both positive and negative numbers.</li>
+                            <li>For example, I will map the top 10 net migration to Cook County so I sort the <code>Net_B2A</code> column DESCENDINGLY and select the first 10 rows by highlighting them in the attribute table. </li> </ul>
+                          <center><img alt="" src="img/select.png" width="100%" ></center></li>
+                            <li>In the Layers pane of QGIS, right-click the layer and select Export > <span style="color:red; font-weight:bold;"> Save Selected Features As</span>, export the selection as a <b>GeoJSON</b> file (<b>EPSG:4326 - WGS 84</b> as the CRS). </li>
+                        <li>Create a <b>new file folder</b> (e.g., lab6) for this lab.</li>
+                          <li>Next, use <b>your code editor</b> to open the GeoJSON file, <b>add the variable definition line</b> at the beginning as we have been doing. Name the variable <code>data</code> (<code>var data = </code>), because the code below uses that name. Save the changed GeoJSON as <code>cook.js</code> to your <b>lab6 folder</b>. </li>
+                        </ul>
+
+
+
+
+
+
+
+                  <p><a id="simple" title="A Simple Flow Map" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> A Simple Flow Map</h3>
+                    <p>We will begin with a simple flow map using the <a href="https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer" target="_blank">Leaflet.Canvas-Flowmap-Layer plugin</a>. Using a Leaflet plugin is basically adding more library files in your HTML document so that you could use their functions for doing specific things. </p>
+                  <ul>
+                      <li>First, open your code editor and <b>set up the basemap showing the contiguous U.S.</b> in <b>fullscreen</b> mode (review the first step of <a href="https://neiugis.github.io/lab4/#prep"  target="_blank">Lab 4</a> if in doubt), and save the document as <code>map6.html</code>.
+                        </li>
+
+
+                      <li>The flow map requires additional libraries: Tween.js and CanvasFlowmapLayer.js that you will need to reference in your HTML document. There is a hosted version of Tween.js but you will need to <a href="https://raw.githubusercontent.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/master/src/CanvasFlowmapLayer.js" target="_blank"><b>download and save the CanvasFlowmapLayer.js</b></a> to your lab 6 map folder and reference it using RELATIVE URL.
+                         <ul>
+                           <li>The link opens the code as text in your browser. Right-click the link and choose <b>Save Link As</b>, or open the link and press <b>Ctrl+S</b> (Windows) or <b>Cmd+S</b> (Mac).</li>
+                           <li>Check the file name before you save. It must be <code>CanvasFlowmapLayer.js</code>. Some browsers add <code>.txt</code> to the end. If that happens, the map will show no flow lines.</li>
+                         </ul></li>
+                         <li> Add the lines below to the <code>head</code> section of your map html.
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">         
+&lt;!-- Load animation tweening library requirement for CanvasFlowMapLayer --&gt;
+&lt;script src=&quot;https://unpkg.com/@tweenjs/tween.js@18.6.4/dist/tween.umd.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- Load CanvasFlowMapLayer; change the path (relative URL) if necessary --&gt;
+&lt;script src=&quot;CanvasFlowmapLayer.js&quot;&gt;&lt;/script&gt;</code></pre></div></li>
+
+                      <li>Reference the data file in the <code>head</code> section as usual:
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
+                               
+    <pre><code class="language-js">     
+&lt;script type=&quot;text/javascript&quot; src=&quot;cook.js&quot;&gt;&lt;/script&gt;</code></pre></div></li>
+
+                      <li>The flows are added through the <code>L.canvasFlowmapLayer</code> function. Add the following lines BELOW the <code>L.tileLayer</code> part. Read the comments for more explanations, especially the origin and destination definition portion.
+                      <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+L.canvasFlowmapLayer(data, { //data is the variable name I used for defining the cook.js data
+  originAndDestinationFieldIds: {
+    originUniqueIdField: 'GEOID_B',  //origin ID; to reverse the flow, swap the origin and destination settings
+    originGeometry: { //origin coordinates 
+      x: 'B_lon',
+      y: 'B_lat'
+    },
+    destinationUniqueIdField: 'GEOID_A', //destination ID
+    destinationGeometry: { //destination coordinates
+      x: 'A_lon',
+      y: 'A_lat'
+    }
+  },
+
+  // Some options to customize the flow map, check out the link below for more
+  // https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#options-and-property-summary
+  pathDisplayMode: 'all',
+  animationStarted: true,
+  animationEasingFamily: 'Cubic', // Compare the options:
+                                  // https://jwasilgeo.github.io/Leaflet.Canvas-Flowmap-Layer/docs/comparison/
+  animationEasingType: 'In',
+  animationDuration: 2000,  // in millisecond, the larger the number the slower
+}).addTo(map);</code></pre></div></li>
+
+                      <li>The map shows the flows you have selected and saved (<a href="https://raw.githubusercontent.com/neiugis/lab6/gh-pages/map/base.html" target="_blank">sample code</a>):</li>
+                    <iframe id="final" src="map/base.html" width=98% height=520 frameborder=0></iframe>
+                  Note the <b>flow direction</b> is correctly showing inflow to Cook County defined by the origin/destination coordinates in the function. <br>By default, the origin location is displayed in larger yellow circle marker, while destinations are in smaller solid blue circle marker. If you are interested in customizing the markers for the flowmap, check out <a href="https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer#style-example" target="_blank">the style example</a> of the library.</ul>
+
+
+
+
+                  <p><a id="custom" title="Customize Flowlines" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Customize Flowlines</h3>
+                  <p>All the flowlines are displayed in the same style by default. We could further customize the lines by using thicker lines for higher volume flows, changing colors, etc. </p>
+                  <ul>
+                  <li>Place the following lines INSIDE the <code>L.canvasFlowmapLayer</code> function, check out the sample code below if in doubt. Please pay attention to the class break definitions, which should be data driven. For simplicity, I used roughly equal intervals except for the last class.
+                  <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+canvasBezierStyle: {
+//This example demonstrates the use of graduated symbols (class breaks) for the flowlines
+//Other options: https://developers.arcgis.com/documentation/common-data-types/renderer-objects.htm
+  type: 'classBreaks',
+  field: 'Net_B2A', // The field/value to be used for symbolizing the lines
+
+  // Define the classes and symbols below
+  classBreakInfos: [{
+    classMinValue: 400,  // break values of this class, using field values defined above
+    classMaxValue: 433,
+    symbol: {  // Define the symbology for this class
+               // See an example from the documentation:https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/blob/master/docs/class-breaks-symbology/index.html#L94-L137
+      strokeStyle: '#AD0755',  // flow line color
+      lineWidth: 10,  // flow line width
+      lineCap: 'round',  // shape of the stroke end
+    }
+  }, {  // another class
+    classMinValue: 300,
+    classMaxValue: 399,
+    symbol: {
+      strokeStyle: '#B21D63',
+      lineWidth: 6,
+      lineCap: 'round',
+    }
+  }, {  // one more class
+    classMinValue: 200,
+    classMaxValue: 299,
+    symbol: {
+      strokeStyle: '#CA2070',
+      lineWidth: 3.5,
+      lineCap: 'round',
+    }
+  }],
+},</code></pre></div></li>
+
+<!--
+              <li>This example demonstrates the use of graduated symbols (class breaks) for the flow lines. If you are looking for more options to customize the flow map, the two links below might be helpful:
+              <br><a href="https://developers.arcgis.com/documentation/common-data-types/renderer-objects.htm" target="_blank">Render flowlines by simple style or catagories (unique values)</a>
+            <br><a href="https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/blob/master/docs/class-breaks-symbology/index.html#L94-L137" target="_blank">An example of more options on using class breaks</a></li>
+-->
+
+
+                  <li>The customized map looks like (<a href="https://raw.githubusercontent.com/neiugis/lab6/gh-pages/map/custom.html" target="_blank">sample code</a>) - zoom in to see the line width variations:</li>
+                <iframe id="final" src="map/custom.html" width=98% height=520 frameborder=0></iframe></ul>
+
+
+
+
+                <p><a id="title" title="Add Map Title" class="toc-item"></a></p>
+                <h3><i class="fa fa-paint-brush"></i> Add Map Title as a Control Pane</h3>
+                <p>A little extra here, we will try another way of adding map title - with a Leaflet control, as opposed to using the <code>&lt;h&gt;</code> tag. We actually have used this function before for adding the legend. </p>
+
+                <ul>
+                  <li>Place the following lines in the <code>script</code> section (e.g., below <code>L.canvasFlowmapLayer</code>) to add the title as a control pane:
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+var title = L.control({position: 'topright'}); // position of the title
+
+title.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'title'); // create a div with a class "title"
+    this._div.innerHTML = "&lt;h3&gt;TOP 10 Net Migration to Cook County, Illinois&lt;/h3&gt;";  // Title text, may use html to customize
+    return this._div;
+};
+
+title.addTo(map);</code></pre></div></li>
+
+                <li>The title shows up at the top right corner as the position specifies. We could also add some styles to the title control to make it look nice. Place the following lines in the <code>style</code> tag (the <code>head</code>section):
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+.title {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}</code></pre></div></li>
+
+                <li>If you would like to try some <b>fun fonts</b>, here is <a href="https://www.w3schools.com/howto/howto_google_fonts.asp" target="_blank">a list of Google fonts</a> you could explore, with their <b>Try It</b> examples (remember to reference their library!). </li>
+
+                  <li>I tried the <b>Acme</b> font for my title. You will see it in the final map at the end of the next section.</li></ul>
+
+                <p><a id="legend" title="Add Labels and a Legend" class="toc-item"></a></p>
+                <h3><i class="fa fa-paint-brush"></i> Add Labels and a Legend</h3>
+                <p>Right now, a reader cannot tell which county each circle is, or what the line widths and colors mean. We will add a label to each origin and destination, and a legend for the flow lines.</p>
+
+                <ul>
+                  <li><b>Labels.</b> Place the following lines INSIDE the <code>L.canvasFlowmapLayer</code> function (for example, right after <code>canvasBezierStyle</code>). The origin and destination circles are regular Leaflet circle markers, so we can bind a tooltip to each one, just like the popups and tooltips we used before:
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+onEachFeature: function (feature, layer) {
+  var p = feature.properties;  // the attributes of this row
+  // Is this circle at the location of County B?
+  var atB = feature.geometry.coordinates[0] === p.B_lon;
+  // If yes, use the name of County B; if not, use the name of County A
+  var name = atB ? p.County_B + ', ' + p.State_B : p.County_A + ', ' + p.State_A;
+  layer.bindTooltip(name);  // the county name shows when the mouse is over the circle
+},</code></pre></div></li>
+                  <li>Hover over a circle to see the county name. The code checks the location of each circle, so the labels stay correct when you reverse the flow direction for the deliverables. You could make the labels always visible with <code>layer.bindTooltip(name, {permanent: true, direction: 'right'});</code>, but the labels overlap where counties are close together (try it and see).</li>
+
+                  <li><b>Legend.</b> The legend is another control pane, like the title. Place the following lines in the <code>script</code> section (e.g., below the title):
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+var legend = L.control({position: 'bottomright'}); // position of the legend
+
+legend.onAdd = function (map) {
+  var div = L.DomUtil.create('div', 'legend'); // create a div with a class "legend"
+  div.innerHTML = '&lt;b&gt;Net migration to Cook County&lt;/b&gt;&lt;br&gt;' +
+    // one line per class: height = lineWidth, background = strokeStyle
+    '&lt;i class="line" style="height:10px; background:#AD0755"&gt;&lt;/i&gt;400 to 433&lt;br&gt;' +
+    '&lt;i class="line" style="height:6px; background:#B21D63"&gt;&lt;/i&gt;300 to 399&lt;br&gt;' +
+    '&lt;i class="line" style="height:3.5px; background:#CA2070"&gt;&lt;/i&gt;200 to 299&lt;br&gt;' +
+    // the circle colors are the default colors of the library
+    '&lt;i class="dot" style="background:rgb(195,255,62); border:1px solid #555"&gt;&lt;/i&gt;Origin county&lt;br&gt;' +
+    '&lt;i class="dot" style="background:rgb(17,142,170)"&gt;&lt;/i&gt;Destination (Cook County)';
+  return div;
+};
+
+legend.addTo(map);</code></pre></div></li>
+
+                  <li>Add the styles for the legend in the <code>style</code> tag (the <code>head</code> section):
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="far fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+.legend {
+    padding: 6px 8px;
+    font: 14px/20px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.legend .line { display: inline-block; width: 30px; margin-right: 6px; vertical-align: middle; }
+.legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }</code></pre></div></li>
+
+                  <li><b>Important:</b> the legend does not update by itself. The line heights, colors, and value ranges in the legend must match the <code>lineWidth</code>, <code>strokeStyle</code>, <code>classMinValue</code>, and <code>classMaxValue</code> in your class breaks. When you change your class breaks, change the legend too.</li>
+
+                  <li>My final map with labels and a legend looks like (<a href="https://raw.githubusercontent.com/neiugis/lab6/gh-pages/map/map6.html" target="_blank">sample code</a>):</li>
+                <iframe id="final" src="map/map6.html" width=98% height=520 frameborder=0></iframe></ul>
+
+                
+
+                  <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Deliverables</h3>
+                     <p>For the deliverables, we use the same migration data. You will create:</p>
+
+                    <ul><li>A flow map to show the <mark>TOP 10 gross OUTFLOW (NOT the net migration) from Cook County</mark> (be careful when you define the origins and destinations in the function). <b>Customize the flow lines (width and color) with the outflow data properly</b>.
+                        </li>
+                        <li>Add <b>labels</b> for the origin and destinations, and a <b>legend</b> that matches your class breaks.</li>
+                        <li><b>Check your map:</b> count the flow lines. You should see 10. If some or all of the lines disappear after you change the class values, check your class breaks. Every flow value must fall inside one class, from <code>classMinValue</code> to <code>classMaxValue</code>.</li>
+                   
+        
+                        <li>Host your map via GitHub (Make sure to rename the html file as <code>index.html</code> and upload any <b>associated data files and library file</b> to the repository!!!) and submit the url through <a href="https://neiu.desire2learn.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?db=285633&ou=3048274" target="_blank">D2L</a>. </li> <br>
+                        
+                    </ul><br>
+                  <p><a id="rubric" title="Rubric" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Rubric</h3>
+                    <p>Your map is graded out of <b>50 points</b>.</p>
+                    <table>
+                        <thead>
+                            <tr><th>Criteria</th><th>What full credit looks like</th><th>Points</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><b>Data selection</b></td><td>The map shows the top 10 flows by gross outflow (<code>Flow_A2B</code>), not net migration.</td><td>10</td></tr>
+                            <tr><td><b>Flow direction</b></td><td>The flows start at Cook County and end at the other counties. Both the ID fields and the coordinate fields for the origin and destination are switched in <code>L.canvasFlowmapLayer</code>.</td><td>10</td></tr>
+                            <tr><td><b>Line symbols</b></td><td>The field in <code>canvasBezierStyle</code> is <code>Flow_A2B</code>. The class break values fit the outflow data. Larger flows have wider lines and stronger colors. All 10 lines appear on the map.</td><td>12</td></tr>
+                            <tr><td><b>Labels and legend</b></td><td>Each circle shows its county name. The legend names what the lines show, and its widths, colors, and value ranges match the class breaks.</td><td>5</td></tr>
+                            <tr><td><b>Title</b></td><td>The map title is on a control pane. It names what the map shows, for example, "Top 10 Outflows from Cook County, Illinois."</td><td>5</td></tr>
+                            <tr><td><b>Map design</b></td><td>The basemap, extent, and zoom level show all 10 flows clearly. The title and legend do not cover the flows.</td><td>3</td></tr>
+                            <tr><td><b>Publishing</b></td><td>The GitHub Pages URL works. The file is named <code>index.html</code>, and <code>cook.js</code> and <code>CanvasFlowmapLayer.js</code> are uploaded to the repository.</td><td>5</td></tr>
+                            <tr><td colspan="2"><b>Total</b></td><td><b>50</b></td></tr>
+                        </tbody>
+                    </table>
+                      <br><br>
+                                      <p><a id="extra" title="Extra Credit" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Extra Credit (up to 5 bonus points)</h3>
+                    <p>This part is <b>optional</b>. Finish the required map first.</p>
+                    <ul>
+                        <li>Ask yourself a different question based on the data, then create a flow map to answer your question.</li>
+                        <li>Add a title (on a control pane) to clarify what you are mapping.</li>
+                    </ul>
+                   
+          
+            </div>
+            </div>
+       
+          <footer>
+            <div class="wrap">
+
+              <p>Copyright &copy; Ting Liu 2026</p>
+            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+            </div>
+          </footer>
+
+            <script src="prism.js"></script>
+    
+        <script>
+            function copyToClipboard(button) {
+                // Find the code block within the same container as the button
+                const codeContainer = button.closest('.code-container');
+                const codeText = codeContainer.querySelector('pre code').innerText;
+
+                // Copy the code text to the clipboard
+                navigator.clipboard.writeText(codeText).then(() => {
+                    // Change the button text to "Copied!" on success
+                    button.innerHTML = ' <i class="fas fa-check"></i> <strong>Copied!</strong>';
+                    button.style.backgroundColor = '#6cbf43'; // Green background for success
+
+                    // Reset the button text and background color after 2 seconds
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="far fa-copy"></i> <strong>Copy code</strong>';
+                        button.style.backgroundColor = '#566573'; // Reset to original color
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            }
+            </script></article>
+     </body>
+</html>
